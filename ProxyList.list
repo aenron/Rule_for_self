@@ -4,7 +4,7 @@
 ## DOMAIN,argotunnel.com
 DOMAIN,dl.tailscale.com
 DOMAIN-KEYWORD,themoviedb
-# DOMAIN-KEYWORD,v2ex
+DOMAIN-KEYWORD,v2ex
 # DOMAIN-KEYWORD,github
 DOMAIN-SUFFIX,thetvdb.com
 DOMAIN-SUFFIX,themoviedb.org
