@@ -3,6 +3,7 @@
 DOMAIN,controlplane.tailscale.com
 DOMAIN,cn.archive.ubuntu.com
 DOMAIN,bgp.he.net
+DOMAIN,hub.1panel.dev
 DOMAIN-SUFFIX,d2l.ai
 DOMAIN-SUFFIX,cyp0633.icu
 DOMAIN-SUFFIX,tailscale.com
