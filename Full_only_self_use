@@ -1,0 +1,422 @@
+from pathlib import Path
+
+content = """name: "Full Only Self Use"
+desc: "完整对应 Full_only_self_use.ini 的 Stash 覆写配置；保留订阅节点，重建策略组、rule-providers 和 rules。规则优先级按 ProxyList → DirectList → ProxyGFWlist。"
+
+proxy-groups: #!replace
+  - name: 🚀 节点选择
+    type: select
+    proxies:
+      - 实验
+      - ♻️ 自动选择
+      - 🚀 手动切换
+      - DIRECT
+      - 香港
+      - 台湾
+      - 新加坡
+      - 日本
+      - 美国
+      - 韩国
+      - 东南亚
+      - 西欧
+      - 小众
+
+  - name: 🚀 手动切换
+    type: select
+    include-all: true
+
+  - name: ♻️ 自动选择
+    type: url-test
+    include-all: true
+    interval: 300
+    lazy: true
+
+  - name: 💬 OpenAi
+    type: select
+    proxies:
+      - 台湾
+      - 新加坡
+      - 香港
+      - 日本
+      - 美国
+      - 韩国
+      - 东南亚
+      - 西欧
+      - 小众
+      - 实验
+      - ♻️ 自动选择
+      - 🚀 手动切换
+      - DIRECT
+
+  - name: Telegram
+    type: select
+    proxies:
+      - 实验
+      - ♻️ 自动选择
+      - 🚀 手动切换
+      - DIRECT
+      - 香港
+      - 台湾
+      - 新加坡
+      - 日本
+      - 美国
+      - 韩国
+      - 东南亚
+      - 西欧
+      - 小众
+
+  - name: 🎥 奈飞视频
+    type: select
+    proxies:
+      - 小众
+      - 🚀 节点选择
+      - 🚀 手动切换
+      - 实验
+      - ♻️ 自动选择
+      - DIRECT
+      - 新加坡
+      - 香港
+      - 台湾
+      - 日本
+      - 美国
+      - 韩国
+      - 东南亚
+      - 西欧
+
+  - name: 🌍 国外媒体
+    type: select
+    proxies:
+      - 实验
+      - 🚀 节点选择
+      - 🚀 手动切换
+      - ♻️ 自动选择
+      - DIRECT
+      - 香港
+      - 台湾
+      - 新加坡
+      - 日本
+      - 美国
+      - 韩国
+      - 东南亚
+      - 西欧
+      - 小众
+
+  - name: Ⓜ️ 微软服务
+    type: select
+    proxies:
+      - DIRECT
+      - 实验
+      - 🚀 节点选择
+      - 🚀 手动切换
+      - 美国
+      - 香港
+      - 台湾
+      - 新加坡
+      - 日本
+      - 韩国
+      - 东南亚
+      - 西欧
+      - 小众
+
+  - name: 🍎 苹果服务
+    type: select
+    proxies:
+      - DIRECT
+      - 实验
+      - 🚀 节点选择
+      - 🚀 手动切换
+      - 美国
+      - 香港
+      - 台湾
+      - 新加坡
+      - 日本
+      - 韩国
+      - 东南亚
+      - 西欧
+      - 小众
+
+  - name: 🎮 游戏平台
+    type: select
+    proxies:
+      - 实验
+      - DIRECT
+      - 🚀 节点选择
+      - 🚀 手动切换
+      - 美国
+      - 香港
+      - 台湾
+      - 新加坡
+      - 日本
+      - 韩国
+      - 东南亚
+      - 西欧
+      - 小众
+
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - 🚀 手动切换
+      - ♻️ 自动选择
+
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - 实验
+      - DIRECT
+      - 🚀 节点选择
+      - ♻️ 自动选择
+      - 香港
+      - 台湾
+      - 新加坡
+      - 日本
+      - 美国
+      - 韩国
+      - 🚀 手动切换
+      - 东南亚
+      - 西欧
+      - 小众
+
+  - name: 实验
+    type: url-test
+    include-all: true
+    filter: '实验'
+    interval: 300
+    lazy: true
+
+  - name: 香港
+    type: url-test
+    include-all: true
+    filter: '(港|HK|Hong Kong)'
+    interval: 300
+    lazy: true
+
+  - name: 台湾
+    type: url-test
+    include-all: true
+    filter: '(台|台湾)'
+    interval: 300
+    lazy: true
+
+  - name: 日本
+    type: url-test
+    include-all: true
+    filter: '(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|日|JP|Japan)'
+    interval: 300
+    lazy: true
+
+  - name: 美国
+    type: url-test
+    include-all: true
+    filter: '(美|波特兰|达拉斯|俄勒冈|凤凰城|旧金山|费利蒙|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥|US)'
+    interval: 300
+    lazy: true
+
+  - name: 新加坡
+    type: url-test
+    include-all: true
+    filter: '(新加坡|坡|狮城|Singap)'
+    interval: 300
+    lazy: true
+
+  - name: 韩国
+    type: url-test
+    include-all: true
+    filter: '(KR|Korea|KOR|首尔|韩|韓)'
+    interval: 300
+    lazy: true
+
+  - name: 东南亚
+    type: select
+    include-all: true
+    filter: '(马来西亚|马来|越南|菲律宾|泰国|印度)'
+
+  - name: 西欧
+    type: select
+    include-all: true
+    filter: '(德国|匈牙利|荷兰|英国|意大利|新西兰)'
+
+  - name: 小众
+    type: select
+    include-all: true
+    filter: '(澳大利亚|巴西|智利|阿根廷|巴基斯坦|南非|俄罗斯|土耳其|乌克兰|以色列|阿联酋)'
+
+rule-providers: #!replace
+  AI:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/AI.list
+    interval: 86400
+
+  OneDrive:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/OneDrive.list
+    interval: 86400
+
+  Microsoft:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Microsoft.list
+    interval: 86400
+
+  ProxyList:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/aenron/Rule_for_self/main/ProxyList.list
+    interval: 86400
+
+  DirectList:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/aenron/Rule_for_self/main/DirectList.list
+    interval: 86400
+
+  ProxyGFWlist:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list
+    interval: 86400
+
+  ChinaIp:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaIp.list
+    interval: 86400
+
+  ChinaIpV6:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaIpV6.list
+    interval: 86400
+
+  ChinaDomain:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list
+    interval: 86400
+
+  ChinaCompanyIp:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list
+    interval: 86400
+
+  Download:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list
+    interval: 86400
+
+  LocalAreaNetwork:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list
+    interval: 86400
+
+  UnBan:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list
+    interval: 86400
+
+  GoogleCN:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCN.list
+    interval: 86400
+
+  SteamCN:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/SteamCN.list
+    interval: 86400
+
+  Telegram:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Telegram.list
+    interval: 86400
+
+  Apple:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Apple.list
+    interval: 86400
+
+  Epic:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Epic.list
+    interval: 86400
+
+  Sony:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Sony.list
+    interval: 86400
+
+  Steam:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Steam.list
+    interval: 86400
+
+  Nintendo:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Nintendo.list
+    interval: 86400
+
+  Netflix:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Netflix.list
+    interval: 86400
+
+  ProxyMedia:
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyMedia.list
+    interval: 86400
+
+rules: #!replace
+  - RULE-SET,AI,💬 OpenAi
+  - RULE-SET,OneDrive,Ⓜ️ 微软服务
+  - RULE-SET,Microsoft,Ⓜ️ 微软服务
+
+  - RULE-SET,ProxyList,🚀 节点选择
+  - RULE-SET,DirectList,🎯 全球直连
+  - RULE-SET,ProxyGFWlist,🚀 节点选择
+
+  - RULE-SET,ChinaIp,🎯 全球直连
+  - RULE-SET,ChinaIpV6,🎯 全球直连
+  - RULE-SET,ChinaDomain,🎯 全球直连
+  - RULE-SET,ChinaCompanyIp,🎯 全球直连
+  - RULE-SET,Download,🎯 全球直连
+  - RULE-SET,LocalAreaNetwork,🎯 全球直连
+  - RULE-SET,UnBan,🎯 全球直连
+  - RULE-SET,GoogleCN,🎯 全球直连
+  - RULE-SET,SteamCN,🎯 全球直连
+
+  - RULE-SET,Telegram,Telegram
+  - RULE-SET,Apple,🍎 苹果服务
+
+  - RULE-SET,Epic,🎮 游戏平台
+  - RULE-SET,Sony,🎮 游戏平台
+  - RULE-SET,Steam,🎮 游戏平台
+  - RULE-SET,Nintendo,🎮 游戏平台
+
+  - RULE-SET,Netflix,🎥 奈飞视频
+  - RULE-SET,ProxyMedia,🌍 国外媒体
+
+  - GEOIP,LAN,🎯 全球直连
+  - GEOIP,CN,🎯 全球直连
+  - MATCH,🐟 漏网之鱼
+"""
+
+path = Path("/mnt/data/Full_only_self_use.stoverride")
+path.write_text(content, encoding="utf-8", newline="\n")
+print(path)
+print(path.stat().st_size)
