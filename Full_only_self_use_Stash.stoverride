@@ -3,7 +3,13 @@ desc: |-
   Stash 2026 官方 Override 语法兼容版
   保留原订阅中的 proxies / proxy-providers
   完全替换 proxy-groups / rule-providers / rules
-  规则优先级：ProxyList -> DirectList -> ProxyGFWlist
+  集成 Tailscale；192.168.10.0/24 强制走 🏠 Tailscale；其余规则优先级：ProxyList -> DirectList -> ProxyGFWlist
+
+proxies:
+  - name: '🏠 Tailscale'
+    type: tailscale
+    hostname: 'stash-iphone'
+    ephemeral: false
 
 proxy-groups: #!replace
   - name: '🚀 节点选择'
@@ -384,6 +390,7 @@ rule-providers: #!replace
     interval: 86400
 
 rules: #!replace
+  - 'IP-CIDR,192.168.10.0/24,🏠 Tailscale,no-resolve'
   - 'RULE-SET,AI,💬 OpenAi'
   - 'RULE-SET,OneDrive,Ⓜ️ 微软服务'
   - 'RULE-SET,Microsoft,Ⓜ️ 微软服务'
