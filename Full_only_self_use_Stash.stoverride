@@ -393,6 +393,7 @@ rule-providers: #!replace
     interval: 86400
 
 rules: #!replace
+  - 'IP-CIDR,100.64.0.0/10,🏠 Tailscale,no-resolve'
   - 'IP-CIDR,192.168.10.0/24,🏠 Tailscale,no-resolve'
   - 'RULE-SET,AI,💬 OpenAi'
   - 'RULE-SET,OneDrive,Ⓜ️ 微软服务'
