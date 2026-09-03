@@ -206,27 +206,6 @@ function main(config) {
     },
 
     {
-      name: "🌍 国外媒体",
-      type: "select",
-      proxies: [
-        "实验",
-        "🚀 节点选择",
-        "🚀 手动切换",
-        "♻️ 自动选择",
-        "DIRECT",
-        "香港",
-        "台湾",
-        "新加坡",
-        "日本",
-        "美国",
-        "韩国",
-        "东南亚",
-        "西欧",
-        "小众"
-      ]
-    },
-
-    {
       name: "Ⓜ️ 微软服务",
       type: "select",
       proxies: [
@@ -435,8 +414,6 @@ function main(config) {
     Telegram: metaDomain("telegram"),
     Apple: metaDomain("apple"),
     Netflix: metaDomain("netflix"),
-    ProxyMedia: metaDomain("proxymedia"),
-
     // aenron/Rule_for_self：直接读取可编辑的 YAML / 文本自定义规则。
     // 规则模板见本目录的 Rule_for_self_meta 文件夹。
     CustomProxyDomain: yamlProvider(
@@ -518,9 +495,6 @@ function main(config) {
     // Netflix
     "RULE-SET,Netflix,🎥 奈飞视频",
 
-    // 国外媒体
-    "RULE-SET,ProxyMedia,🌍 国外媒体",
-
     // GFW：通用代理兜底，放在所有专用业务规则之后。
     "RULE-SET,ProxyGFWlist,🚀 节点选择",
 
@@ -568,7 +542,6 @@ config.dns["nameserver-policy"] = {
   "rule-set:ProxyGFWlist": overseasDns,
   "rule-set:Telegram": overseasDns,
   "rule-set:Netflix": overseasDns,
-  "rule-set:ProxyMedia": overseasDns,
   "rule-set:Epic": overseasDns,
   "rule-set:Sony": overseasDns,
   "rule-set:Steam": overseasDns,
@@ -600,4 +573,3 @@ config.dns["fake-ip-filter"] = [
 
   return config;
 }
-

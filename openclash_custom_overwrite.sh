@@ -254,23 +254,6 @@ config['proxy-groups'] = [
     '西欧'
   ]),
 
-  select_group('🌍 国外媒体', [
-    '实验',
-    '🚀 节点选择',
-    '🚀 手动切换',
-    '♻️ 自动选择',
-    'DIRECT',
-    '香港',
-    '台湾',
-    '新加坡',
-    '日本',
-    '美国',
-    '韩国',
-    '东南亚',
-    '西欧',
-    '小众'
-  ]),
-
   select_group('Ⓜ️ 微软服务', [
     'DIRECT',
     '实验',
@@ -417,7 +400,6 @@ custom_rule_providers = {
   'Telegram' => meta_domain('telegram'),
   'Apple' => meta_domain('apple'),
   'Netflix' => meta_domain('netflix'),
-  'ProxyMedia' => meta_domain('proxymedia'),
   'GoogleCN' => meta_domain('google@cn'),
   'SteamCN' => meta_domain('steam@cn'),
   'Epic' => meta_domain('epicgames'),
@@ -489,7 +471,6 @@ config['rules'] = [
   'RULE-SET,Steam,🎮 游戏平台',
   'RULE-SET,Nintendo,🎮 游戏平台',
   'RULE-SET,Netflix,🎥 奈飞视频',
-  'RULE-SET,ProxyMedia,🌍 国外媒体',
   'RULE-SET,ProxyGFWlist,🚀 节点选择',
 
   'MATCH,DIRECT'
@@ -533,7 +514,6 @@ dns['nameserver-policy'] = existing_dns_policy.merge(
   'rule-set:ProxyGFWlist' => overseas_dns.dup,
   'rule-set:Telegram' => overseas_dns.dup,
   'rule-set:Netflix' => overseas_dns.dup,
-  'rule-set:ProxyMedia' => overseas_dns.dup,
   'rule-set:Epic' => overseas_dns.dup,
   'rule-set:Sony' => overseas_dns.dup,
   'rule-set:Steam' => overseas_dns.dup,
@@ -617,4 +597,3 @@ fi
 
 log_msg "Custom overwrite SUCCESS. Detail log: $RUBY_LOG"
 exit 0
-

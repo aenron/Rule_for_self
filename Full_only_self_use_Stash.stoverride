@@ -94,24 +94,6 @@ proxy-groups: #!replace
       - '东南亚'
       - '西欧'
 
-  - name: '🌍 国外媒体'
-    type: select
-    proxies:
-      - '实验'
-      - '🚀 节点选择'
-      - '🚀 手动切换'
-      - '♻️ 自动选择'
-      - 'DIRECT'
-      - '香港'
-      - '台湾'
-      - '新加坡'
-      - '日本'
-      - '美国'
-      - '韩国'
-      - '东南亚'
-      - '西欧'
-      - '小众'
-
   - name: 'Ⓜ️ 微软服务'
     type: select
     proxies:
@@ -305,12 +287,6 @@ rule-providers: #!replace
     url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs'
     interval: 86400
 
-  ProxyMedia:
-    behavior: domain
-    format: mrs
-    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/proxymedia.mrs'
-    interval: 86400
-
   GoogleCN:
     behavior: domain
     format: mrs
@@ -408,8 +384,6 @@ rules: #!replace
   - 'RULE-SET,Steam,🎮 游戏平台'
   - 'RULE-SET,Nintendo,🎮 游戏平台'
   - 'RULE-SET,Netflix,🎥 奈飞视频'
-  - 'RULE-SET,ProxyMedia,🌍 国外媒体'
-
   # Generic proxy fallback after every dedicated service rule.
   - 'RULE-SET,ProxyGFWlist,🚀 节点选择'
 
