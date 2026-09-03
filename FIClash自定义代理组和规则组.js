@@ -415,6 +415,7 @@ function main(config) {
     TelegramIP: metaIp("telegram"),
     Apple: metaDomain("apple"),
     Netflix: metaDomain("netflix"),
+    NetflixIP: metaIp("netflix"),
     // aenron/Rule_for_self：直接读取可编辑的 YAML / 文本自定义规则。
     // 规则模板见本目录的 Rule_for_self_meta 文件夹。
     CustomProxyDomain: yamlProvider(
@@ -496,6 +497,7 @@ function main(config) {
 
     // Netflix
     "RULE-SET,Netflix,🎥 奈飞视频",
+    "RULE-SET,NetflixIP,🎥 奈飞视频",
 
     // GFW：通用代理兜底，放在所有专用业务规则之后。
     "RULE-SET,ProxyGFWlist,🚀 节点选择",

@@ -413,6 +413,7 @@ custom_rule_providers = {
   'TelegramIP' => meta_ip('telegram'),
   'Apple' => meta_domain('apple'),
   'Netflix' => meta_domain('netflix'),
+  'NetflixIP' => meta_ip('netflix'),
   'GoogleCN' => meta_domain('google@cn'),
   'SteamCN' => meta_domain('steam@cn'),
   'Epic' => meta_domain('epicgames'),
@@ -485,6 +486,7 @@ config['rules'] = [
   'RULE-SET,Steam,🎮 游戏平台',
   'RULE-SET,Nintendo,🎮 游戏平台',
   'RULE-SET,Netflix,🎥 奈飞视频',
+  'RULE-SET,NetflixIP,🎥 奈飞视频',
   'RULE-SET,ProxyGFWlist,🚀 节点选择',
 
   'MATCH,DIRECT'

@@ -293,6 +293,12 @@ rule-providers: #!replace
     url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs'
     interval: 86400
 
+  NetflixIP:
+    behavior: ipcidr
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs'
+    interval: 86400
+
   GoogleCN:
     behavior: domain
     format: mrs
@@ -391,6 +397,7 @@ rules: #!replace
   - 'RULE-SET,Steam,🎮 游戏平台'
   - 'RULE-SET,Nintendo,🎮 游戏平台'
   - 'RULE-SET,Netflix,🎥 奈飞视频'
+  - 'RULE-SET,NetflixIP,🎥 奈飞视频'
   # Generic proxy fallback after every dedicated service rule.
   - 'RULE-SET,ProxyGFWlist,🚀 节点选择'
 
