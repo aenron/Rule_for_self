@@ -1,0 +1,4 @@
+# 强制代理的 classical 规则。
+# 此处保留不能表达为 domain/ipcidr YAML 的规则。
+DOMAIN-KEYWORD,themoviedb
+DOMAIN-KEYWORD,v2ex

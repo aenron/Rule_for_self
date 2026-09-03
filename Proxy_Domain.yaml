@@ -1,0 +1,20 @@
+# 强制代理的域名规则。
+# 裸域名为精确匹配；+.example.com 匹配该域名及其所有子域。
+payload:
+  - dl.tailscale.com
+  - +.thetvdb.com
+  - +.themoviedb.org
+  - +.fanart.tv
+  - +.jellyfin.org
+  - +.supes.top
+  - +.coinbase.com
+  - +.bitnodes.io
+  - +.docker.io
+  - +.lscr.io
+  - +.ghcr.io
+  - +.giffgaff.com
+  - +.openwrt.ai
+  - +.cloudflare.com
+  - +.javmost.com
+  - +.plex.tv
+  - +.oaiusercontent.com

@@ -1,0 +1,7 @@
+# 强制直连的 classical 规则。
+# 此处保留不能表达为 domain/ipcidr YAML 的规则。
+PROCESS-NAME,tailscaled
+PROCESS-NAME,tailscale
+PROCESS-NAME,tailscaled.exe
+PROCESS-NAME,tailscale.exe
+PROCESS-NAME,zerotier-one

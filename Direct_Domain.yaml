@@ -1,0 +1,13 @@
+# 强制直连的域名规则。
+# 裸域名为精确匹配；+.example.com 匹配该域名及其所有子域。
+payload:
+  - controlplane.tailscale.com
+  - cn.archive.ubuntu.com
+  - bgp.he.net
+  - hub.1panel.dev
+  - +.d2l.ai
+  - +.cyp0633.icu
+  - +.tailscale.com
+  - +.tailscale.io
+  - +.adroot.cc
+  - +.argotunnel.com
