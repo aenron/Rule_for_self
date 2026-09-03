@@ -3,7 +3,7 @@ desc: |-
   Stash 2026 官方 Override 语法兼容版
   保留原订阅中的 proxies / proxy-providers
   完全替换 proxy-groups / rule-providers / rules
-  集成 Tailscale；192.168.10.0/24 强制走 🏠 Tailscale；其余规则优先级：ProxyList -> DirectList -> ProxyGFWlist
+  集成 Tailscale；使用 MetaCubeX MRS、可读自定义规则和默认直连策略
 
 proxies:
   - name: '🏠 Tailscale'
@@ -42,7 +42,7 @@ proxy-groups: #!replace
     interval: 300
     lazy: true
 
-  - name: '💬 OpenAi'
+  - name: '🤖 AI 服务'
     type: select
     proxies:
       - '台湾'
@@ -171,26 +171,10 @@ proxy-groups: #!replace
       - '🚀 手动切换'
       - '♻️ 自动选择'
 
-  - name: '🐟 漏网之鱼'
-    type: select
-    proxies:
-      - '实验'
-      - 'DIRECT'
-      - '🚀 节点选择'
-      - '♻️ 自动选择'
-      - '香港'
-      - '台湾'
-      - '新加坡'
-      - '日本'
-      - '美国'
-      - '韩国'
-      - '🚀 手动切换'
-      - '东南亚'
-      - '西欧'
-      - '小众'
-
   - name: '实验'
     type: url-test
+    proxies:
+      - '🚀 手动切换'
     include-all: true
     filter: '实验'
     interval: 300
@@ -198,6 +182,8 @@ proxy-groups: #!replace
 
   - name: '香港'
     type: url-test
+    proxies:
+      - '🚀 手动切换'
     include-all: true
     filter: '港|HK|Hong Kong'
     interval: 300
@@ -205,6 +191,8 @@ proxy-groups: #!replace
 
   - name: '台湾'
     type: url-test
+    proxies:
+      - '🚀 手动切换'
     include-all: true
     filter: '台|台湾'
     interval: 300
@@ -212,6 +200,8 @@ proxy-groups: #!replace
 
   - name: '日本'
     type: url-test
+    proxies:
+      - '🚀 手动切换'
     include-all: true
     filter: '日本|川日|东京|大阪|泉日|埼玉|沪日|深日|日|JP|Japan'
     interval: 300
@@ -219,6 +209,8 @@ proxy-groups: #!replace
 
   - name: '美国'
     type: url-test
+    proxies:
+      - '🚀 手动切换'
     include-all: true
     filter: '美|波特兰|达拉斯|俄勒冈|凤凰城|旧金山|费利蒙|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥|US'
     interval: 300
@@ -226,6 +218,8 @@ proxy-groups: #!replace
 
   - name: '新加坡'
     type: url-test
+    proxies:
+      - '🚀 手动切换'
     include-all: true
     filter: '新加坡|坡|狮城|Singap'
     interval: 300
@@ -233,6 +227,8 @@ proxy-groups: #!replace
 
   - name: '韩国'
     type: url-test
+    proxies:
+      - '🚀 手动切换'
     include-all: true
     filter: 'KR|Korea|KOR|首尔|韩|韓'
     interval: 300
@@ -240,189 +236,182 @@ proxy-groups: #!replace
 
   - name: '东南亚'
     type: select
+    proxies:
+      - '🚀 手动切换'
     include-all: true
     filter: '马来西亚|马来|越南|菲律宾|泰国|印度'
 
   - name: '西欧'
     type: select
+    proxies:
+      - '🚀 手动切换'
     include-all: true
     filter: '德国|匈牙利|荷兰|英国|意大利|新西兰'
 
   - name: '小众'
     type: select
+    proxies:
+      - '🚀 手动切换'
     include-all: true
     filter: '澳大利亚|巴西|智利|阿根廷|巴基斯坦|南非|俄罗斯|土耳其|乌克兰|以色列|阿联酋'
 
 rule-providers: #!replace
+  # MetaCubeX MRS: indexed domain/IP matching with lower memory use.
   AI:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/AI.list'
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs'
+    interval: 86400
+
+  GitHub:
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs'
     interval: 86400
 
   OneDrive:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/OneDrive.list'
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/onedrive.mrs'
     interval: 86400
 
   Microsoft:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Microsoft.list'
-    interval: 86400
-
-  ProxyList:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/aenron/Rule_for_self/main/ProxyList.list'
-    interval: 86400
-
-  DirectList:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/aenron/Rule_for_self/main/DirectList.list'
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs'
     interval: 86400
 
   ProxyGFWlist:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list'
-    interval: 86400
-
-  ChinaIp:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaIp.list'
-    interval: 86400
-
-  ChinaIpV6:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaIpV6.list'
-    interval: 86400
-
-  ChinaDomain:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list'
-    interval: 86400
-
-  ChinaCompanyIp:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list'
-    interval: 86400
-
-  Download:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list'
-    interval: 86400
-
-  LocalAreaNetwork:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list'
-    interval: 86400
-
-  UnBan:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list'
-    interval: 86400
-
-  GoogleCN:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCN.list'
-    interval: 86400
-
-  SteamCN:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/SteamCN.list'
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs'
     interval: 86400
 
   Telegram:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Telegram.list'
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs'
     interval: 86400
 
   Apple:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Apple.list'
-    interval: 86400
-
-  Epic:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Epic.list'
-    interval: 86400
-
-  Sony:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Sony.list'
-    interval: 86400
-
-  Steam:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Steam.list'
-    interval: 86400
-
-  Nintendo:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Nintendo.list'
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs'
     interval: 86400
 
   Netflix:
-    behavior: classical
-    format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Netflix.list'
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs'
     interval: 86400
 
   ProxyMedia:
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/proxymedia.mrs'
+    interval: 86400
+
+  GoogleCN:
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google@cn.mrs'
+    interval: 86400
+
+  SteamCN:
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam@cn.mrs'
+    interval: 86400
+
+  Epic:
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/epicgames.mrs'
+    interval: 86400
+
+  Sony:
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/sony.mrs'
+    interval: 86400
+
+  Steam:
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs'
+    interval: 86400
+
+  Nintendo:
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/nintendo.mrs'
+    interval: 86400
+
+  # aenron/Rule_for_self custom rules remain readable and editable.
+  CustomProxyDomain:
+    behavior: domain
+    format: yaml
+    url: 'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Proxy_Domain.yaml'
+    interval: 86400
+
+  CustomDirectDomain:
+    behavior: domain
+    format: yaml
+    url: 'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Direct_Domain.yaml'
+    interval: 86400
+
+  CustomDirectIp:
+    behavior: ipcidr
+    format: yaml
+    url: 'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Direct_IP.yaml'
+    interval: 86400
+
+  CustomProxyClassical:
     behavior: classical
     format: text
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyMedia.list'
+    url: 'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Proxy_Classical.list'
+    interval: 86400
+
+  CustomDirectClassical:
+    behavior: classical
+    format: text
+    url: 'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Direct_Classical.list'
     interval: 86400
 
 rules: #!replace
+  # Preserve the device-specific Tailscale routes.
   - 'IP-CIDR,100.64.0.0/10,🏠 Tailscale,no-resolve'
   - 'IP-CIDR,192.168.10.0/24,🏠 Tailscale,no-resolve'
-  - 'RULE-SET,AI,💬 OpenAi'
+
+  # Custom proxy entries intentionally precede direct entries so
+  # dl.tailscale.com can proxy while +.tailscale.com remains direct.
+  - 'RULE-SET,CustomProxyDomain,🚀 节点选择'
+  - 'RULE-SET,CustomProxyClassical,🚀 节点选择'
+  - 'RULE-SET,CustomDirectDomain,🎯 全球直连'
+  - 'RULE-SET,CustomDirectIp,🎯 全球直连,no-resolve'
+  - 'RULE-SET,CustomDirectClassical,🎯 全球直连'
+
+  - 'RULE-SET,AI,🤖 AI 服务'
+
+  # GitHub is separated before the broad Microsoft set.
+  - 'RULE-SET,GitHub,🚀 节点选择'
   - 'RULE-SET,OneDrive,Ⓜ️ 微软服务'
   - 'RULE-SET,Microsoft,Ⓜ️ 微软服务'
 
-  - 'RULE-SET,ProxyList,🚀 节点选择'
-  - 'RULE-SET,DirectList,🎯 全球直连'
-  - 'RULE-SET,ProxyGFWlist,🚀 节点选择'
-
-  - 'RULE-SET,ChinaIp,🎯 全球直连'
-  - 'RULE-SET,ChinaIpV6,🎯 全球直连'
-  - 'RULE-SET,ChinaDomain,🎯 全球直连'
-  - 'RULE-SET,ChinaCompanyIp,🎯 全球直连'
-  - 'RULE-SET,Download,🎯 全球直连'
-  - 'RULE-SET,LocalAreaNetwork,🎯 全球直连'
-  - 'RULE-SET,UnBan,🎯 全球直连'
   - 'RULE-SET,GoogleCN,🎯 全球直连'
   - 'RULE-SET,SteamCN,🎯 全球直连'
 
   - 'RULE-SET,Telegram,Telegram'
   - 'RULE-SET,Apple,🍎 苹果服务'
-
   - 'RULE-SET,Epic,🎮 游戏平台'
   - 'RULE-SET,Sony,🎮 游戏平台'
   - 'RULE-SET,Steam,🎮 游戏平台'
   - 'RULE-SET,Nintendo,🎮 游戏平台'
-
   - 'RULE-SET,Netflix,🎥 奈飞视频'
   - 'RULE-SET,ProxyMedia,🌍 国外媒体'
 
-  - 'GEOIP,CN,🎯 全球直连'
-  - 'MATCH,🐟 漏网之鱼'
+  # Generic proxy fallback after every dedicated service rule.
+  - 'RULE-SET,ProxyGFWlist,🚀 节点选择'
+
+  # Default-direct: traffic not matched above does not use a proxy.
+  - 'MATCH,DIRECT'
