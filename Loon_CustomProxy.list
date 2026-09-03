@@ -1,0 +1,20 @@
+# Loon readable custom proxy rules. Keep this file before Loon_CustomDirect.list.
+DOMAIN,dl.tailscale.com
+DOMAIN-SUFFIX,thetvdb.com
+DOMAIN-SUFFIX,themoviedb.org
+DOMAIN-SUFFIX,fanart.tv
+DOMAIN-SUFFIX,jellyfin.org
+DOMAIN-SUFFIX,supes.top
+DOMAIN-SUFFIX,coinbase.com
+DOMAIN-SUFFIX,bitnodes.io
+DOMAIN-SUFFIX,docker.io
+DOMAIN-SUFFIX,lscr.io
+DOMAIN-SUFFIX,ghcr.io
+DOMAIN-SUFFIX,giffgaff.com
+DOMAIN-SUFFIX,openwrt.ai
+DOMAIN-SUFFIX,cloudflare.com
+DOMAIN-SUFFIX,javmost.com
+DOMAIN-SUFFIX,plex.tv
+DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN-KEYWORD,themoviedb
+DOMAIN-KEYWORD,v2ex

@@ -1,0 +1,12 @@
+# Loon readable custom direct rules. IP rules use no-resolve to avoid DNS lookups.
+DOMAIN,controlplane.tailscale.com
+DOMAIN,cn.archive.ubuntu.com
+DOMAIN,bgp.he.net
+DOMAIN,hub.1panel.dev
+DOMAIN-SUFFIX,d2l.ai
+DOMAIN-SUFFIX,cyp0633.icu
+DOMAIN-SUFFIX,tailscale.com
+DOMAIN-SUFFIX,tailscale.io
+DOMAIN-SUFFIX,adroot.cc
+DOMAIN-SUFFIX,argotunnel.com
+IP-CIDR,159.138.145.227/32,no-resolve
