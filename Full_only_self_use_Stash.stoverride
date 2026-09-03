@@ -275,6 +275,12 @@ rule-providers: #!replace
     url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs'
     interval: 86400
 
+  TelegramIP:
+    behavior: ipcidr
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs'
+    interval: 86400
+
   Apple:
     behavior: domain
     format: mrs
@@ -378,6 +384,7 @@ rules: #!replace
   - 'RULE-SET,SteamCN,🎯 全球直连'
 
   - 'RULE-SET,Telegram,Telegram'
+  - 'RULE-SET,TelegramIP,Telegram'
   - 'RULE-SET,Apple,🍎 苹果服务'
   - 'RULE-SET,Epic,🎮 游戏平台'
   - 'RULE-SET,Sony,🎮 游戏平台'

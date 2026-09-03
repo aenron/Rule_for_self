@@ -412,6 +412,7 @@ function main(config) {
     Microsoft: metaDomain("microsoft"),
     ProxyGFWlist: metaDomain("gfw"),
     Telegram: metaDomain("telegram"),
+    TelegramIP: metaIp("telegram"),
     Apple: metaDomain("apple"),
     Netflix: metaDomain("netflix"),
     // aenron/Rule_for_self：直接读取可编辑的 YAML / 文本自定义规则。
@@ -482,6 +483,7 @@ function main(config) {
 
     // Telegram
     "RULE-SET,Telegram,Telegram",
+    "RULE-SET,TelegramIP,Telegram",
 
     // Apple
     "RULE-SET,Apple,🍎 苹果服务",

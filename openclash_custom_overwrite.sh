@@ -172,6 +172,18 @@ def meta_domain(name)
   }
 end
 
+def meta_ip(name)
+  {
+    'type' => 'http',
+    'behavior' => 'ipcidr',
+    'format' => 'mrs',
+    'url' => "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/#{name}.mrs",
+    'path' => "./rule_provider/#{name}-ip.mrs",
+    'proxy' => RULE_PROVIDER_PROXY,
+    'interval' => 86400
+  }
+end
+
 # -----------------------------------------------------------------------------
 # Completely replace proxy-groups
 #
@@ -398,6 +410,7 @@ custom_rule_providers = {
   'Microsoft' => meta_domain('microsoft'),
   'ProxyGFWlist' => meta_domain('gfw'),
   'Telegram' => meta_domain('telegram'),
+  'TelegramIP' => meta_ip('telegram'),
   'Apple' => meta_domain('apple'),
   'Netflix' => meta_domain('netflix'),
   'GoogleCN' => meta_domain('google@cn'),
@@ -465,6 +478,7 @@ config['rules'] = [
   'RULE-SET,SteamCN,🎯 全球直连',
 
   'RULE-SET,Telegram,Telegram',
+  'RULE-SET,TelegramIP,Telegram',
   'RULE-SET,Apple,🍎 苹果服务',
   'RULE-SET,Epic,🎮 游戏平台',
   'RULE-SET,Sony,🎮 游戏平台',
