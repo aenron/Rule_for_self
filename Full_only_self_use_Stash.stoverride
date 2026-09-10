@@ -3,12 +3,19 @@ desc: |-
   Stash 2026 官方 Override 语法兼容版
   保留原订阅中的 proxies / proxy-providers
   保留原订阅 proxy-groups；完全替换 rule-providers / rules
-  保留原订阅节点；使用 MetaCubeX MRS、可读自定义规则和默认直连策略
+  集成 Tailscale；使用 MetaCubeX MRS、可读自定义规则和默认直连策略
+
+proxies:
+  - name: '🏠 Tailscale'
+    type: tailscale
+    hostname: 'stash-iphone'
+    ephemeral: false
 
 proxy-groups:
   - name: '🚀 节点选择'
     type: select
     proxies:
+      - '🏠 Tailscale'
       - '实验'
       - '♻️ 自动选择'
       - '🚀 手动切换'
@@ -25,6 +32,8 @@ proxy-groups:
 
   - name: '🚀 手动切换'
     type: select
+    proxies:
+      - '🏠 Tailscale'
     include-all: true
 
   - name: '♻️ 自动选择'
@@ -356,6 +365,10 @@ rule-providers: #!replace
     interval: 86400
 
 rules: #!replace
+  # Preserve the device-specific Tailscale routes.
+  - 'IP-CIDR,100.64.0.0/10,🏠 Tailscale,no-resolve'
+  - 'IP-CIDR,192.168.10.0/24,🏠 Tailscale,no-resolve'
+
   # Custom proxy entries intentionally precede direct entries so
   # dl.tailscale.com can proxy while +.tailscale.com remains direct.
   - 'RULE-SET,CustomProxyDomain,🚀 节点选择'
