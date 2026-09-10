@@ -3,7 +3,7 @@ desc: |-
   Stash 2026 官方 Override 语法兼容版
   保留原订阅中的 proxies / proxy-providers
   完全替换 proxy-groups / rule-providers / rules
-  集成 Tailscale；使用 MetaCubeX MRS、可读自定义规则和默认直连策略
+  集成 Tailscale；使用 MetaCubeX MRS、可读自定义规则和中国/私网直连策略
 
 proxies:
   - name: '🏠 Tailscale'
@@ -15,11 +15,10 @@ proxy-groups: #!replace
   - name: '🚀 节点选择'
     type: select
     proxies:
-      - '🏠 Tailscale'
       - '实验'
       - '♻️ 自动选择'
       - '🚀 手动切换'
-      - 'DIRECT'
+      - '🏠 Tailscale'
       - '香港'
       - '台湾'
       - '新加坡'
@@ -29,16 +28,12 @@ proxy-groups: #!replace
       - '东南亚'
       - '西欧'
       - '小众'
+      - 'DIRECT'
 
   - name: '🚀 手动切换'
     type: select
     proxies:
       - '🏠 Tailscale'
-    include-all: true
-
-  # 仅用于验证覆写合并后是否可见原订阅节点。
-  - name: '🔎 全部订阅节点'
-    type: select
     include-all: true
 
   - name: '♻️ 自动选择'
@@ -158,6 +153,24 @@ proxy-groups: #!replace
       - '🚀 手动切换'
       - '♻️ 自动选择'
 
+  - name: '🐟 漏网之鱼'
+    type: select
+    proxies:
+      - '🚀 节点选择'
+      - '实验'
+      - '♻️ 自动选择'
+      - '🚀 手动切换'
+      - '香港'
+      - '台湾'
+      - '新加坡'
+      - '日本'
+      - '美国'
+      - '韩国'
+      - '东南亚'
+      - '西欧'
+      - '小众'
+      - 'DIRECT'
+
   - name: '实验'
     type: url-test
     include-all: true
@@ -254,6 +267,30 @@ rule-providers: #!replace
     url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs'
     interval: 86400
 
+  PrivateDomain:
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs'
+    interval: 86400
+
+  PrivateIP:
+    behavior: ipcidr
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs'
+    interval: 86400
+
+  ChinaDomain:
+    behavior: domain
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs'
+    interval: 86400
+
+  ChinaIP:
+    behavior: ipcidr
+    format: mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs'
+    interval: 86400
+
   Telegram:
     behavior: domain
     format: mrs
@@ -345,6 +382,12 @@ rule-providers: #!replace
     url: 'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Proxy_Classical.list'
     interval: 86400
 
+  Gmail:
+    behavior: domain
+    format: yaml
+    url: 'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Gmail_Domain.yaml'
+    interval: 86400
+
   CustomDirectClassical:
     behavior: classical
     format: text
@@ -371,6 +414,8 @@ rules: #!replace
   - 'RULE-SET,OneDrive,Ⓜ️ 微软服务'
   - 'RULE-SET,Microsoft,Ⓜ️ 微软服务'
 
+  # Gmail must precede GoogleCN because the latter contains direct Gmail exceptions.
+  - 'RULE-SET,Gmail,🚀 节点选择'
   - 'RULE-SET,GoogleCN,🎯 全球直连'
   - 'RULE-SET,SteamCN,🎯 全球直连'
 
@@ -386,5 +431,11 @@ rules: #!replace
   # Generic proxy fallback after every dedicated service rule.
   - 'RULE-SET,ProxyGFWlist,🚀 节点选择'
 
-  # Default-direct: traffic not matched above does not use a proxy.
-  - 'MATCH,DIRECT'
+  # China/private traffic is direct only after dedicated services and GFW.
+  - 'RULE-SET,PrivateDomain,🎯 全球直连'
+  - 'RULE-SET,PrivateIP,🎯 全球直连,no-resolve'
+  - 'RULE-SET,ChinaDomain,🎯 全球直连'
+  - 'RULE-SET,ChinaIP,🎯 全球直连,no-resolve'
+
+  # All remaining overseas or unknown traffic uses the proxy fallback group.
+  - 'MATCH,🐟 漏网之鱼'
