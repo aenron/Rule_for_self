@@ -34,12 +34,10 @@ proxy-groups: #!replace
     type: select
     proxies:
       - '🏠 Tailscale'
-    include-all-proxies: true
     include-all: true
 
   - name: '♻️ 自动选择'
     type: url-test
-    include-all-proxies: true
     include-all: true
     interval: 300
     lazy: true
@@ -175,7 +173,6 @@ proxy-groups: #!replace
 
   - name: '实验'
     type: url-test
-    include-all-proxies: true
     include-all: true
     filter: '实验'
     interval: 300
@@ -183,7 +180,6 @@ proxy-groups: #!replace
 
   - name: '香港'
     type: url-test
-    include-all-proxies: true
     include-all: true
     filter: '港|HK|Hong Kong'
     interval: 300
@@ -191,7 +187,6 @@ proxy-groups: #!replace
 
   - name: '台湾'
     type: url-test
-    include-all-proxies: true
     include-all: true
     filter: '台|台湾'
     interval: 300
@@ -199,7 +194,6 @@ proxy-groups: #!replace
 
   - name: '日本'
     type: url-test
-    include-all-proxies: true
     include-all: true
     filter: '日本|川日|东京|大阪|泉日|埼玉|沪日|深日|日|JP|Japan'
     interval: 300
@@ -207,7 +201,6 @@ proxy-groups: #!replace
 
   - name: '美国'
     type: url-test
-    include-all-proxies: true
     include-all: true
     filter: '美|波特兰|达拉斯|俄勒冈|凤凰城|旧金山|费利蒙|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥|US'
     interval: 300
@@ -215,7 +208,6 @@ proxy-groups: #!replace
 
   - name: '新加坡'
     type: url-test
-    include-all-proxies: true
     include-all: true
     filter: '新加坡|坡|狮城|Singap'
     interval: 300
@@ -223,7 +215,6 @@ proxy-groups: #!replace
 
   - name: '韩国'
     type: url-test
-    include-all-proxies: true
     include-all: true
     filter: 'KR|Korea|KOR|首尔|韩|韓'
     interval: 300
@@ -231,19 +222,16 @@ proxy-groups: #!replace
 
   - name: '东南亚'
     type: select
-    include-all-proxies: true
     include-all: true
     filter: '马来西亚|马来|越南|菲律宾|泰国|印度'
 
   - name: '西欧'
     type: select
-    include-all-proxies: true
     include-all: true
     filter: '德国|匈牙利|荷兰|英国|意大利|新西兰'
 
   - name: '小众'
     type: select
-    include-all-proxies: true
     include-all: true
     filter: '澳大利亚|巴西|智利|阿根廷|巴基斯坦|南非|俄罗斯|土耳其|乌克兰|以色列|阿联酋'
 
