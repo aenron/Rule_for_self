@@ -1,6 +1,6 @@
 # Rule_for_self
 
-面向 Mihomo 系客户端的个人规则与覆写脚本：FiClash、OpenClash 和 Stash 使用同一套“默认直连 + 专用业务 / GFW / 自定义代理规则”的策略。只有命中代理规则的流量才走代理，最终规则为 `MATCH,DIRECT`。
+面向 Mihomo 系客户端的个人规则与覆写脚本：FiClash、OpenClash 和 Stash 使用同一套“中国/私网直连 + 专用业务 / GFW / 自定义代理优先 + 其余流量代理”的策略。最终规则为 `MATCH,🐟 漏网之鱼`，其默认项为 `🚀 节点选择`，`DIRECT` 只保留为最后的手动回退。
 
 ## 使用入口
 
@@ -29,6 +29,6 @@ YAML 域名规则中，裸域名表示精确匹配；`+.example.com` 表示该�
 
 ## 规则优先级
 
-自定义直连 / 代理规则和专用业务规则优先，随后是 GFW 通用代理规则，最后默认直连。GitHub 规则独立于微软服务规则，并排在微软规则之前；Telegram 和 Netflix 同时加载域名及官方 IP 段规则，以覆盖移动端直连 IP 的流量。已移除上游失效的 `ProxyMedia` / `🌍 国外媒体` 规则集与策略组，避免规则下载 404。
+自定义直连 / 代理规则和专用业务规则优先，随后是 GFW 通用代理规则；再匹配 MetaCubeX 的 `private` 与 `cn` 域名/IP MRS 并直连；剩余境外或未知流量进入 `🐟 漏网之鱼`。GitHub 规则独立于微软服务规则，并排在微软规则之前；Telegram 和 Netflix 同时加载域名及官方 IP 段规则，以覆盖移动端直连 IP 的流量。已移除上游失效的 `ProxyMedia` / `🌍 国外媒体` 规则集与策略组，避免规则下载 404。
 
 `ProxyList.list` 和 `DirectList.list` 已迁移并移除；历史规则中的域名、IP、`DOMAIN-KEYWORD` 和 `PROCESS-NAME` 分别归入以上可读文件。

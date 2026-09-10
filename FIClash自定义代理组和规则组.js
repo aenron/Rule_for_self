@@ -276,6 +276,16 @@ function main(config) {
       ]
     },
 
+    {
+      name: "🐟 漏网之鱼",
+      type: "select",
+      proxies: [
+        "🚀 节点选择", "实验", "♻️ 自动选择", "🚀 手动切换",
+        "香港", "台湾", "新加坡", "日本", "美国", "韩国",
+        "东南亚", "西欧", "小众", "DIRECT"
+      ]
+    },
+
     // ========================
     // 地区测速组
     // ========================
@@ -411,6 +421,10 @@ function main(config) {
     OneDrive: metaDomain("onedrive"),
     Microsoft: metaDomain("microsoft"),
     ProxyGFWlist: metaDomain("gfw"),
+    PrivateDomain: metaDomain("private"),
+    PrivateIP: metaIp("private"),
+    ChinaDomain: metaDomain("cn"),
+    ChinaIP: metaIp("cn"),
     Telegram: metaDomain("telegram"),
     TelegramIP: metaIp("telegram"),
     Apple: metaDomain("apple"),
@@ -511,8 +525,14 @@ function main(config) {
     "RULE-SET,ProxyGFWlist,🚀 节点选择",
 
 
-    // 未命中专用业务、GFW 或自定义代理规则的流量默认直连。
-    "MATCH,DIRECT"
+    // 基础直连规则放在 GFW 之后：专用业务和 GFW 均优先代理。
+    "RULE-SET,PrivateDomain,🎯 全球直连",
+    "RULE-SET,PrivateIP,🎯 全球直连,no-resolve",
+    "RULE-SET,ChinaDomain,🎯 全球直连",
+    "RULE-SET,ChinaIP,🎯 全球直连,no-resolve",
+
+    // 其余境外或未知流量进入代理；DIRECT 仅在该组内作为最后手动回退。
+    "MATCH,🐟 漏网之鱼"
   ];
 
 
@@ -559,6 +579,8 @@ config.dns["nameserver-policy"] = {
   "rule-set:Steam": overseasDns,
   "rule-set:Nintendo": overseasDns,
   "rule-set:Gmail": overseasDns,
+  "rule-set:PrivateDomain": domesticDns,
+  "rule-set:ChinaDomain": domesticDns,
   "rule-set:GoogleCN": domesticDns,
   "rule-set:SteamCN": domesticDns
 };

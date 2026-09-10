@@ -8,8 +8,8 @@
 #   2. Completely replace subscription proxy-groups.
 #   3. Use low-overhead MetaCubeX MRS rule-providers, while preserving
 #      OpenClash internal oc-* providers.
-#   4. Use a default-direct rule model: only dedicated, GFW and custom proxy
-#      rules use proxies.
+#   4. Direct China/private traffic; route dedicated, GFW and unmatched
+#      overseas traffic through proxy policy groups.
 #   5. Rebuild groups/rules according to:
 #      https://raw.githubusercontent.com/aenron/Rule_for_self/refs/heads/main/Full_only_self_use.ini
 #
@@ -133,7 +133,7 @@ end
 
 # All remote rule sets are fetched through the primary policy group. GitHub Raw
 # often cannot be reached directly from the router, and a failed provider makes
-# its RULE-SET silently ineffective under MATCH,DIRECT.
+# its RULE-SET silently ineffective under the final fallback rule.
 RULE_PROVIDER_PROXY = '🚀 节点选择'
 
 def classical_provider(url, filename)
@@ -321,6 +321,15 @@ config['proxy-groups'] = [
     '♻️ 自动选择'
   ]),
 
+  select_group('🐟 漏网之鱼', [
+    '🚀 节点选择',
+    '实验',
+    '♻️ 自动选择',
+    '🚀 手动切换',
+    '香港', '台湾', '新加坡', '日本', '美国', '韩国',
+    '东南亚', '西欧', '小众', 'DIRECT'
+  ]),
+
   # Region groups: preserve the regex logic from Full_only_self_use.ini.
   include_url_test_group(
     '实验',
@@ -409,6 +418,10 @@ custom_rule_providers = {
   'OneDrive' => meta_domain('onedrive'),
   'Microsoft' => meta_domain('microsoft'),
   'ProxyGFWlist' => meta_domain('gfw'),
+  'PrivateDomain' => meta_domain('private'),
+  'PrivateIP' => meta_ip('private'),
+  'ChinaDomain' => meta_domain('cn'),
+  'ChinaIP' => meta_ip('cn'),
   'Telegram' => meta_domain('telegram'),
   'TelegramIP' => meta_ip('telegram'),
   'Apple' => meta_domain('apple'),
@@ -495,7 +508,12 @@ config['rules'] = [
   'RULE-SET,NetflixIP,🎥 奈飞视频',
   'RULE-SET,ProxyGFWlist,🚀 节点选择',
 
-  'MATCH,DIRECT'
+  'RULE-SET,PrivateDomain,🎯 全球直连',
+  'RULE-SET,PrivateIP,🎯 全球直连,no-resolve',
+  'RULE-SET,ChinaDomain,🎯 全球直连',
+  'RULE-SET,ChinaIP,🎯 全球直连,no-resolve',
+
+  'MATCH,🐟 漏网之鱼'
 ]
 
 # -----------------------------------------------------------------------------
@@ -541,6 +559,8 @@ dns['nameserver-policy'] = existing_dns_policy.merge(
   'rule-set:Steam' => overseas_dns.dup,
   'rule-set:Nintendo' => overseas_dns.dup,
   'rule-set:Gmail' => overseas_dns.dup,
+  'rule-set:PrivateDomain' => domestic_dns.dup,
+  'rule-set:ChinaDomain' => domestic_dns.dup,
   'rule-set:GoogleCN' => domestic_dns.dup,
   'rule-set:SteamCN' => domestic_dns.dup
 )
