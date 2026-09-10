@@ -59,7 +59,7 @@ proxy-groups: #!replace
       - '🚀 手动切换'
       - 'DIRECT'
 
-  - name: 'Telegram'
+  - name: '✈️ Telegram'
     type: select
     proxies:
       - '实验'
@@ -439,8 +439,8 @@ rules: #!replace
   - 'RULE-SET,GoogleCN,🎯 全球直连'
   - 'RULE-SET,SteamCN,🎯 全球直连'
 
-  - 'RULE-SET,Telegram,Telegram'
-  - 'RULE-SET,TelegramIP,Telegram'
+  - 'RULE-SET,Telegram,✈️ Telegram'
+  - 'RULE-SET,TelegramIP,✈️ Telegram'
   - 'RULE-SET,Apple,🍎 苹果服务'
   - 'RULE-SET,Epic,🎮 游戏平台'
   - 'RULE-SET,Sony,🎮 游戏平台'
