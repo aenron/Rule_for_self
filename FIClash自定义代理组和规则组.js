@@ -439,6 +439,11 @@ function main(config) {
     CustomDirectClassical: classicalProvider(
       "https://raw.githubusercontent.com/aenron/Rule_for_self/main/Direct_Classical.list"
     ),
+    Gmail: yamlProvider(
+      "https://raw.githubusercontent.com/aenron/Rule_for_self/main/Gmail_Domain.yaml",
+      "domain",
+      "./ruleset/gmail-domain.yaml"
+    ),
 
     GoogleCN: metaDomain("google@cn"),
     SteamCN: metaDomain("steam@cn"),
@@ -477,6 +482,9 @@ function main(config) {
     "RULE-SET,GitHub,🚀 节点选择",
     "RULE-SET,OneDrive,Ⓜ️ 微软服务",
     "RULE-SET,Microsoft,Ⓜ️ 微软服务",
+
+    // Gmail 必须先于 GoogleCN；后者包含部分 Gmail 可直连例外域名。
+    "RULE-SET,Gmail,🚀 节点选择",
 
     // 国内服务
     "RULE-SET,GoogleCN,🎯 全球直连",
@@ -550,6 +558,7 @@ config.dns["nameserver-policy"] = {
   "rule-set:Sony": overseasDns,
   "rule-set:Steam": overseasDns,
   "rule-set:Nintendo": overseasDns,
+  "rule-set:Gmail": overseasDns,
   "rule-set:GoogleCN": domesticDns,
   "rule-set:SteamCN": domesticDns
 };

@@ -438,6 +438,10 @@ custom_rule_providers = {
     'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Proxy_Classical.list',
     'custom-proxy-classical.list'
   ),
+  'Gmail' => yaml_provider(
+    'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Gmail_Domain.yaml',
+    'domain', 'gmail-domain.yaml'
+  ),
   'CustomDirectClassical' => classical_provider(
     'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Direct_Classical.list',
     'custom-direct-classical.list'
@@ -475,6 +479,8 @@ config['rules'] = [
   'RULE-SET,OneDrive,Ⓜ️ 微软服务',
   'RULE-SET,Microsoft,Ⓜ️ 微软服务',
 
+  # Gmail must precede GoogleCN because the latter contains direct Gmail exceptions.
+  'RULE-SET,Gmail,🚀 节点选择',
   'RULE-SET,GoogleCN,🎯 全球直连',
   'RULE-SET,SteamCN,🎯 全球直连',
 
@@ -534,6 +540,7 @@ dns['nameserver-policy'] = existing_dns_policy.merge(
   'rule-set:Sony' => overseas_dns.dup,
   'rule-set:Steam' => overseas_dns.dup,
   'rule-set:Nintendo' => overseas_dns.dup,
+  'rule-set:Gmail' => overseas_dns.dup,
   'rule-set:GoogleCN' => domestic_dns.dup,
   'rule-set:SteamCN' => domestic_dns.dup
 )

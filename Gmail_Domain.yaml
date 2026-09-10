@@ -1,0 +1,11 @@
+# Gmail 专用代理域名。必须先于 GoogleCN，以避免其可直连例外规则造成混合路径。
+# +.example.com 同时匹配该域名及所有子域。
+payload:
+  - +.gmail.com
+  - +.mail.google.com
+  - accounts.google.com
+  - oauth2.googleapis.com
+  - gmail.googleapis.com
+  - redirector.c.mail.google.com
+  - +.googleusercontent.com
+  - +.gstatic.com

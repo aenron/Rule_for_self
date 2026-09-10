@@ -17,6 +17,7 @@
 | 文件 | `behavior` / `format` | 用途 |
 | --- | --- | --- |
 | `Proxy_Domain.yaml` | `domain` / `yaml` | 强制代理的域名；例如 `+.flower.yt`。 |
+| `Gmail_Domain.yaml` | `domain` / `yaml` | Gmail 专用代理域名；优先于 GoogleCN。 |
 | `Proxy_Classical.list` | `classical` / `text` | 强制代理的关键字、进程或端口等规则。 |
 | `Direct_Domain.yaml` | `domain` / `yaml` | 强制直连的域名。 |
 | `Direct_IP.yaml` | `ipcidr` / `yaml` | 强制直连的 IP CIDR。 |

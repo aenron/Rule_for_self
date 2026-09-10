@@ -360,6 +360,12 @@ rule-providers: #!replace
     url: 'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Proxy_Classical.list'
     interval: 86400
 
+  Gmail:
+    behavior: domain
+    format: yaml
+    url: 'https://raw.githubusercontent.com/aenron/Rule_for_self/main/Gmail_Domain.yaml'
+    interval: 86400
+
   CustomDirectClassical:
     behavior: classical
     format: text
@@ -386,6 +392,8 @@ rules: #!replace
   - 'RULE-SET,OneDrive,Ⓜ️ 微软服务'
   - 'RULE-SET,Microsoft,Ⓜ️ 微软服务'
 
+  # Gmail must precede GoogleCN because the latter contains direct Gmail exceptions.
+  - 'RULE-SET,Gmail,🚀 节点选择'
   - 'RULE-SET,GoogleCN,🎯 全球直连'
   - 'RULE-SET,SteamCN,🎯 全球直连'
 
