@@ -2,7 +2,7 @@ name: 'Full Only Self Use'
 desc: |-
   Stash 2026 官方 Override 语法兼容版
   保留原订阅中的 proxies / proxy-providers
-  保留原订阅中的 proxy-groups；替换 rule-providers / rules
+  完全替换 proxy-groups / rule-providers / rules
   集成 Tailscale；使用 MetaCubeX MRS、可读自定义规则和中国/私网直连策略
 
 proxies:
@@ -11,14 +11,13 @@ proxies:
     hostname: 'stash-iphone'
     ephemeral: false
 
-proxy-groups:
+proxy-groups: #!replace
   - name: '🚀 节点选择'
     type: select
     proxies:
       - '实验'
       - '♻️ 自动选择'
       - '🚀 手动切换'
-      - 'Proxies'
       - '🏠 Tailscale'
       - '香港'
       - '台湾'
@@ -35,7 +34,6 @@ proxy-groups:
     type: select
     proxies:
       - '🏠 Tailscale'
-      - 'Proxies'
     include-all: true
 
   - name: '♻️ 自动选择'
