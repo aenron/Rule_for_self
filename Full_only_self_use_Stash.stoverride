@@ -2,10 +2,10 @@ name: 'Full Only Self Use'
 desc: |-
   Stash 2026 官方 Override 语法兼容版
   保留原订阅中的 proxies / proxy-providers
-  完全替换 proxy-groups / rule-providers / rules
+  保留原订阅 proxy-groups；完全替换 rule-providers / rules
   保留原订阅节点；使用 MetaCubeX MRS、可读自定义规则和默认直连策略
 
-proxy-groups: #!replace
+proxy-groups:
   - name: '🚀 节点选择'
     type: select
     proxies:
