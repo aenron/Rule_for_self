@@ -7,8 +7,8 @@
 // 3. 完全替换机场 rules
 // 4. 使用自己的 ACL4SSR / Rule_for_self 规则集
 //
-// 对应：
-// Full_only_self_use.ini
+// 策略设计见：
+// README.md
 // ============================================================
 
 function main(config) {
@@ -431,7 +431,7 @@ function main(config) {
     Netflix: metaDomain("netflix"),
     NetflixIP: metaIp("netflix"),
     // aenron/Rule_for_self：直接读取可编辑的 YAML / 文本自定义规则。
-    // 规则模板见本目录的 Rule_for_self_meta 文件夹。
+    // 自定义规则直接维护在仓库根目录的 YAML / 文本文件中。
     CustomProxyDomain: yamlProvider(
       "https://raw.githubusercontent.com/aenron/Rule_for_self/main/Proxy_Domain.yaml",
       "domain",
@@ -472,7 +472,7 @@ function main(config) {
   // ----------------------------------------------------------
   // 6. 完全覆盖机场 rules
   //
-  // 顺序基本保持你的 Full_only_self_use.ini
+  // 顺序遵循 README.md 中定义的策略优先级。
   // ----------------------------------------------------------
 
   config.rules = [

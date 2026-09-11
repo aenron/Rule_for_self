@@ -10,8 +10,8 @@
 #      OpenClash internal oc-* providers.
 #   4. Direct China/private traffic; route dedicated, GFW and unmatched
 #      overseas traffic through proxy policy groups.
-#   5. Rebuild groups/rules according to:
-#      https://raw.githubusercontent.com/aenron/Rule_for_self/refs/heads/main/Full_only_self_use.ini
+#   5. Rebuild groups/rules according to the repository's current custom-rule
+#      files and policy design documented in README.md.
 #
 # Target:
 #   OpenClash + Mihomo / Meta core
@@ -330,7 +330,7 @@ config['proxy-groups'] = [
     '东南亚', '西欧', '小众', 'DIRECT'
   ]),
 
-  # Region groups: preserve the regex logic from Full_only_self_use.ini.
+  # Region groups: preserve the repository's shared regex logic.
   include_url_test_group(
     '实验',
     filter: '(实验)',

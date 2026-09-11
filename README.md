@@ -9,6 +9,9 @@
 | FiClash | `FIClash自定义代理组和规则组.js` | 后处理脚本；重建代理组、规则集和 DNS 分流。 |
 | OpenClash | `openclash_custom_overwrite.sh` | 自定义覆写脚本；保留 OpenClash 的 `oc-*` DNS 规则集。 |
 | Stash | `Full_only_self_use_Stash.stoverride` | 覆写配置；使用 MetaCubeX MRS 规则集。 |
+| Loon | `Full_only_self_use_Loon_pure.conf` | 远程主配置；机场订阅仅在 Loon 本地添加，不写入仓库。 |
+
+`Rule_for_self` 是 FiClash、OpenClash、Stash 与 Loon 配置的唯一维护源。客户端应配置本仓库 `main` 分支的远程文件，不保留 `D:\sync\服务器运维` 根目录中的本地副本，以免更新时发生版本漂移。
 
 脚本会从本仓库的 `main` 分支下载下列可读自定义规则，并使用 `🚀 节点选择` 代理下载所需的 FiClash / OpenClash 规则集。应用脚本或覆写后重新加载配置（或更新订阅）即可生效。
 
@@ -24,8 +27,6 @@
 | `Direct_Classical.list` | `classical` / `text` | 强制直连的关键字、进程或端口等规则。 |
 
 YAML 域名规则中，裸域名表示精确匹配；`+.example.com` 表示该域名和全部子域名。IP 规则必须填写 CIDR。上述文件可直接编辑和提交，无需编译为 `.mrs`。
-
-`Proxy_IP.yaml` 仅保留为可选模板，当前三个客户端都未加载它；需要新增强制代理 IP 规则时，应先同步调整对应覆写脚本。
 
 ## 规则优先级
 
