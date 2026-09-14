@@ -5,6 +5,96 @@ desc: |-
   完全替换 proxy-groups / rule-providers / rules
   集成 Tailscale；使用 MetaCubeX MRS、可读自定义规则和中国/私网直连策略
 
+ipv6: true
+
+dns:
+  enable: true
+  ipv6: true
+  cache-algorithm: arc
+  # Bootstrap resolvers are only used to resolve encrypted DNS server names.
+  default-nameserver:
+    - '223.5.5.5'
+    - '119.29.29.29'
+    - '2400:3200::1'
+    - '2400:3200:baba::1'
+    - '2402:4e00::'
+    - '1.1.1.1'
+    - '8.8.8.8'
+    - '2606:4700:4700::1111'
+    - '2001:4860:4860::8888'
+  nameserver:
+    - 'https://dns.alidns.com/dns-query'
+    - 'https://doh.pub/dns-query'
+  fallback:
+    - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+    - 'https://dns.google/dns-query#🚀 节点选择'
+  proxy-server-nameserver:
+    - 'https://dns.alidns.com/dns-query'
+    - 'https://doh.pub/dns-query'
+  direct-nameserver:
+    - 'https://dns.alidns.com/dns-query'
+    - 'https://doh.pub/dns-query'
+  direct-nameserver-follow-policy: false
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    fallback-lazy-query: false
+  nameserver-policy:
+    'rule-set:CustomProxyDomain':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:AI':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:GitHub':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:OneDrive':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:Microsoft':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:ProxyGFWlist':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:Telegram':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:Netflix':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:Epic':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:Sony':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:Steam':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:Nintendo':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:Gmail':
+      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
+      - 'https://dns.google/dns-query#🚀 节点选择'
+    'rule-set:CustomDirectDomain':
+      - 'https://dns.alidns.com/dns-query'
+      - 'https://doh.pub/dns-query'
+    'rule-set:PrivateDomain':
+      - 'https://dns.alidns.com/dns-query'
+      - 'https://doh.pub/dns-query'
+    'rule-set:ChinaDomain':
+      - 'https://dns.alidns.com/dns-query'
+      - 'https://doh.pub/dns-query'
+    'rule-set:GoogleCN':
+      - 'https://dns.alidns.com/dns-query'
+      - 'https://doh.pub/dns-query'
+    'rule-set:SteamCN':
+      - 'https://dns.alidns.com/dns-query'
+      - 'https://doh.pub/dns-query'
+
 proxies:
   - name: '🏠 Tailscale'
     type: tailscale

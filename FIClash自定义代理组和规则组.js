@@ -542,6 +542,10 @@ function main(config) {
 
 config.dns = config.dns || {};
 
+// DNS IPv6 only enables AAAA resolution. The top-level flag allows Mihomo to
+// accept IPv6 traffic as well when the platform's TUN implementation supports it.
+config.ipv6 = true;
+
 const domesticDns = [
   "https://dns.alidns.com/dns-query",
   "https://doh.pub/dns-query"
@@ -554,18 +558,35 @@ const overseasDns = [
 ];
 
 config.dns.enable = true;
+config.dns.ipv6 = true;
+config.dns["cache-algorithm"] = "arc";
 // 仅用于解析 DoH 服务器域名的启动 DNS，必须为 IP 地址。
-config.dns["default-nameserver"] = ["223.5.5.5", "119.29.29.29"];
+config.dns["default-nameserver"] = [
+  "223.5.5.5",
+  "119.29.29.29",
+  "2400:3200::1",
+  "2400:3200:baba::1",
+  "2402:4e00::",
+  "1.1.1.1",
+  "8.8.8.8",
+  "2606:4700:4700::1111",
+  "2001:4860:4860::8888"
+];
 config.dns.nameserver = domesticDns;
 config.dns.fallback = overseasDns;
 config.dns["proxy-server-nameserver"] = domesticDns;
+config.dns["direct-nameserver"] = domesticDns;
+config.dns["direct-nameserver-follow-policy"] = false;
 config.dns["fallback-filter"] = {
   geoip: true,
-  "geoip-code": "CN"
+  "geoip-code": "CN",
+  "fallback-lazy-query": false
 };
 
 // nameserver-policy 优先级高于 nameserver/fallback：明确代理的业务直接使用国外 DoH。
-config.dns["nameserver-policy"] = {
+// Preserve client or subscription policies that this override does not manage.
+const existingDnsPolicy = config.dns["nameserver-policy"] || {};
+const managedDnsPolicy = {
   "rule-set:CustomProxyDomain": overseasDns,
   "rule-set:AI": overseasDns,
   "rule-set:GitHub": overseasDns,
@@ -579,10 +600,15 @@ config.dns["nameserver-policy"] = {
   "rule-set:Steam": overseasDns,
   "rule-set:Nintendo": overseasDns,
   "rule-set:Gmail": overseasDns,
+  "rule-set:CustomDirectDomain": domesticDns,
   "rule-set:PrivateDomain": domesticDns,
   "rule-set:ChinaDomain": domesticDns,
   "rule-set:GoogleCN": domesticDns,
   "rule-set:SteamCN": domesticDns
+};
+config.dns["nameserver-policy"] = {
+  ...existingDnsPolicy,
+  ...managedDnsPolicy
 };
 
 const oldFakeIpFilter = Array.isArray(config.dns["fake-ip-filter"])

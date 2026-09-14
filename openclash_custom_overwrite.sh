@@ -532,16 +532,29 @@ overseas_dns = [
 ]
 
 dns['enable'] = true
-dns['default-nameserver'] = ['223.5.5.5', '119.29.29.29']
+dns['ipv6'] = true
+dns['cache-algorithm'] = 'arc'
+config['ipv6'] = true
+# Bootstrap DNS resolves DoH server hostnames. Keep dual-stack domestic and
+# overseas resolvers here; ordinary domain queries are controlled below.
+dns['default-nameserver'] = [
+  '223.5.5.5', '119.29.29.29',
+  '2400:3200::1', '2400:3200:baba::1', '2402:4e00::',
+  '1.1.1.1', '8.8.8.8',
+  '2606:4700:4700::1111', '2001:4860:4860::8888'
+]
 # Use independent Array objects. Psych otherwise writes YAML anchors when the
 # same Array is reused by nameserver-policy, which older OpenClash Ruby builds
 # may reject during validation.
 dns['nameserver'] = domestic_dns.dup
 dns['fallback'] = overseas_dns.dup
 dns['proxy-server-nameserver'] = domestic_dns.dup
+dns['direct-nameserver'] = domestic_dns.dup
+dns['direct-nameserver-follow-policy'] = false
 dns['fallback-filter'] = {
   'geoip' => true,
-  'geoip-code' => 'CN'
+  'geoip-code' => 'CN',
+  'fallback-lazy-query' => false
 }
 
 existing_dns_policy = dns['nameserver-policy'].is_a?(Hash) ? dns['nameserver-policy'] : {}
@@ -559,6 +572,7 @@ dns['nameserver-policy'] = existing_dns_policy.merge(
   'rule-set:Steam' => overseas_dns.dup,
   'rule-set:Nintendo' => overseas_dns.dup,
   'rule-set:Gmail' => overseas_dns.dup,
+  'rule-set:CustomDirectDomain' => domestic_dns.dup,
   'rule-set:PrivateDomain' => domestic_dns.dup,
   'rule-set:ChinaDomain' => domestic_dns.dup,
   'rule-set:GoogleCN' => domestic_dns.dup,

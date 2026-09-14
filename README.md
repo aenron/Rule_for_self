@@ -13,6 +13,10 @@
 
 `Rule_for_self` 是 FiClash、OpenClash、Stash 与 Loon 配置的唯一维护源。客户端应配置本仓库 `main` 分支的远程文件，不保留 `D:\sync\服务器运维` 根目录中的本地副本，以免更新时发生版本漂移。
 
+## DNS 与 IPv6
+
+FiClash、OpenClash 与 Stash 启用双栈 DNS：AliDNS / DNSPod DoH 用于国内与直连域名，Cloudflare / Google DoH 经 `🚀 节点选择` 用于代理业务。`nameserver-policy` 依据规则集指定解析器，`default-nameserver` 同时包含 IPv4 与 IPv6 启动 DNS；节点域名和直连出口仍使用国内 DoH，避免代理 DNS 的循环依赖。Loon 使用 `ip-mode = dual` 及国内 UDP/DoH DNS；其原生格式不支持 Mihomo 的 `nameserver-policy`。
+
 FiClash、OpenClash 与 Stash 会从本仓库 `main` 分支下载下列可读自定义规则；Loon 通过原生 `.list` 文件加载对应的自定义规则。应用脚本或覆写后重新加载配置（或更新订阅）即可生效。
 
 ## 可编辑自定义规则
