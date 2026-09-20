@@ -9,4 +9,5 @@ DOMAIN-SUFFIX,tailscale.com
 DOMAIN-SUFFIX,tailscale.io
 DOMAIN-SUFFIX,adroot.cc
 DOMAIN-SUFFIX,argotunnel.com
+DOMAIN-SUFFIX,push.apple.com
 IP-CIDR,159.138.145.227/32,no-resolve
