@@ -2,6 +2,15 @@
 # 裸域名为精确匹配；+.example.com 匹配该域名及其所有子域。
 payload:
   - dl.tailscale.com
+  # Hugging Face 文件传输端点优先走普通代理；主站仍由 AI 规则处理。
+  - cas-server.xethub.hf.co
+  - cas-server.xethub-eu.hf.co
+  - transfer.xethub.hf.co
+  - transfer.xethub-eu.hf.co
+  - us.aws.cdn.hf.co
+  - us.gcp.cdn.hf.co
+  - cdn-lfs-us-1.hf.co
+  - cdn-lfs-eu-1.hf.co
   - +.thetvdb.com
   - +.themoviedb.org
   - +.fanart.tv

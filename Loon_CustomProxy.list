@@ -1,5 +1,14 @@
 # Loon readable custom proxy rules. Keep this file before Loon_CustomDirect.list.
 DOMAIN,dl.tailscale.com
+# Hugging Face 文件传输端点优先走普通代理。
+DOMAIN,cas-server.xethub.hf.co
+DOMAIN,cas-server.xethub-eu.hf.co
+DOMAIN,transfer.xethub.hf.co
+DOMAIN,transfer.xethub-eu.hf.co
+DOMAIN,us.aws.cdn.hf.co
+DOMAIN,us.gcp.cdn.hf.co
+DOMAIN,cdn-lfs-us-1.hf.co
+DOMAIN,cdn-lfs-eu-1.hf.co
 DOMAIN-SUFFIX,thetvdb.com
 DOMAIN-SUFFIX,themoviedb.org
 DOMAIN-SUFFIX,fanart.tv

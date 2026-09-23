@@ -32,6 +32,8 @@ FiClash、OpenClash 与 Stash 会从本仓库 `main` 分支下载下列可读自
 
 YAML 域名规则中，裸域名表示精确匹配；`+.example.com` 表示该域名和全部子域名。IP 规则必须填写 CIDR。上述文件供 Mihomo 系客户端直接加载，无需编译为 `.mrs`；Loon 使用 `Loon_CustomProxy.list` 与 `Loon_CustomDirect.list`，修改自定义规则时应同步维护对应 Loon 语法。
 
+Hugging Face 的 Xet、CDN 与 LFS 文件传输域名列在 `Proxy_Domain.yaml`（Loon 对应 `Loon_CustomProxy.list`），先于 AI 规则命中 `🚀 节点选择`；`huggingface.co` 主站及 API 仍按 `🤖 AI 服务` 分流。端点依据 [Hugging Face 官方下载文档](https://huggingface.co/docs/hub/models-downloading#downloading-behind-a-proxy-or-firewall)；若下载基础设施新增域名，需同步更新这两份列表。
+
 ## 规则优先级
 
 FiClash、OpenClash 与 Stash 中，自定义直连 / 代理规则和专用业务规则优先，随后是 GFW 通用代理规则；再匹配 MetaCubeX 的 `private` 与 `cn` 域名/IP MRS 并直连；剩余境外或未知流量进入 `🐟 漏网之鱼`。GitHub 规则独立于微软服务规则，并排在微软规则之前；Telegram 和 Netflix 同时加载域名及官方 IP 段规则，以覆盖移动端直连 IP 的流量。已移除上游失效的 `ProxyMedia` / `🌍 国外媒体` 规则集与策略组，避免规则下载 404。
