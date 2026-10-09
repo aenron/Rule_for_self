@@ -617,7 +617,12 @@ const oldFakeIpFilter = Array.isArray(config.dns["fake-ip-filter"])
 
 const extraFakeIpFilter = [
   "eastcom-sw.com",
-  "*.eastcom-sw.com"
+  "*.eastcom-sw.com",
+  // WPS 云文档使用真实 IP，避免 Fake-IP 导致文档持续加载。
+  "+.wps.cn",
+  "+.wpscdn.cn",
+  "+.kdocs.cn",
+  "+.ksord.com"
 ];
 
 config.dns["fake-ip-filter"] = [
@@ -631,6 +636,19 @@ config.dns["fake-ip-filter"] = [
 // ----------------------------------------------------------
 // 8. 返回修改后的配置
 // ----------------------------------------------------------
+
+  // 此电脑通过 Tailscale 访问 WebDAV；显式指定出口，避免自动选到物理网卡后返回 502。
+  // 在其他电脑使用时，需要确保对应网卡名称也是 Tailscale。
+  const webdavDirectName = "WebDAV-LAN-Tailscale";
+  config.proxies = (config.proxies || []).filter(p => p.name !== webdavDirectName);
+  config.proxies.push({
+    name: webdavDirectName,
+    type: "direct",
+    udp: true,
+    "interface-name": "Tailscale"
+  });
+  const webdavDirectRule = "IP-CIDR,192.168.10.192/32," + webdavDirectName + ",no-resolve";
+  config.rules = [webdavDirectRule, ...config.rules.filter(r => r !== webdavDirectRule)];
 
   return config;
 }
