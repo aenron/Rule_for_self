@@ -68,6 +68,10 @@ unless config.is_a?(Hash)
   exit 11
 end
 
+# Set TUN MTU while preserving OpenClash's other TUN settings.
+config['tun'] = {} unless config['tun'].is_a?(Hash)
+config['tun']['mtu'] = 1492
+
 # -----------------------------------------------------------------------------
 # Basic validation
 # -----------------------------------------------------------------------------
