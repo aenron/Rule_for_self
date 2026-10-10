@@ -7,6 +7,9 @@ desc: |-
 
 ipv6: true
 
+tun:
+  mtu: 1492
+
 dns:
   enable: true
   ipv6: true
