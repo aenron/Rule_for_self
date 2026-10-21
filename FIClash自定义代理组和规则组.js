@@ -479,6 +479,9 @@ function main(config) {
   // ----------------------------------------------------------
 
   config.rules = [
+    // Syncthing 文件同步、发现和中继连接统一直连。
+    "PROCESS-NAME,syncthing.exe,DIRECT",
+
   
     // eastcom-sw.com 兜底直连
     "DOMAIN-SUFFIX,eastcom-sw.com,DIRECT",
