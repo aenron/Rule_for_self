@@ -479,6 +479,12 @@ puts "[custom-overwrite] preserved OpenClash oc-* providers: #{oc_rule_providers
 # set so their own policy group is effective.
 # -----------------------------------------------------------------------------
 config['rules'] = [
+  # Syncthing on LAN clients: direct default sync/relay ports and official domains.
+  # Custom peer/relay ports require additional rules; remote process names are unavailable.
+  'DST-PORT,22000,DIRECT',
+  'DST-PORT,22067,DIRECT',
+  'DOMAIN-SUFFIX,syncthing.net,DIRECT',
+
   'DOMAIN-SUFFIX,eastcom-sw.com,DIRECT',
 
   # Custom entries have the highest priority. Proxy rules intentionally precede
