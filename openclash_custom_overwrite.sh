@@ -479,6 +479,11 @@ puts "[custom-overwrite] preserved OpenClash oc-* providers: #{oc_rule_providers
 # set so their own policy group is effective.
 # -----------------------------------------------------------------------------
 config['rules'] = [
+  # qBittorrent on homelab: peer IPv4 bind 192.168.10.192, outgoing TCP
+  # ports 26000-26999; listen/DHT/uTP port 6881. Keep other host services routed.
+  'AND,((SRC-IP-CIDR,192.168.10.192/32),(SRC-PORT,26000-26999)),DIRECT',
+  'AND,((SRC-IP-CIDR,192.168.10.192/32),(SRC-PORT,6881)),DIRECT',
+
   # Syncthing on LAN clients: direct default sync/relay ports and official domains.
   # Custom peer/relay ports require additional rules; remote process names are unavailable.
   'DST-PORT,22000,DIRECT',
