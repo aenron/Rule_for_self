@@ -479,6 +479,12 @@ puts "[custom-overwrite] preserved OpenClash oc-* providers: #{oc_rule_providers
 # set so their own policy group is effective.
 # -----------------------------------------------------------------------------
 config['rules'] = [
+  # Homelab ZeroTier: primary and fixed secondary/tertiary UDP ports.
+  'AND,((SRC-IP-CIDR,192.168.10.192/32),(NETWORK,UDP),(SRC-PORT,9993/45229/38935)),DIRECT',
+  'AND,((SRC-IP-CIDR,192.168.10.192/32),(NETWORK,UDP),(DST-PORT,9993)),DIRECT',
+  # Syncthing STUN/QUIC may originate at 22000 with a different destination port.
+  'AND,((SRC-IP-CIDR,192.168.10.192/32),(NETWORK,UDP),(SRC-PORT,22000)),DIRECT',
+
   # qBittorrent on homelab: peer IPv4 bind 192.168.10.192, outgoing TCP
   # ports 26000-26999; listen/DHT/uTP port 6881. Keep other host services routed.
   'AND,((SRC-IP-CIDR,192.168.10.192/32),(SRC-PORT,26000-26999)),DIRECT',
