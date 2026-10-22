@@ -479,6 +479,9 @@ puts "[custom-overwrite] preserved OpenClash oc-* providers: #{oc_rule_providers
 # set so their own policy group is effective.
 # -----------------------------------------------------------------------------
 config['rules'] = [
+  # STUN/TURN discovery must use the direct UDP path (IPv4 and IPv6).
+  'AND,((NETWORK,UDP),(DST-PORT,3478)),DIRECT',
+
   # Homelab ZeroTier: primary and fixed secondary/tertiary UDP ports.
   'AND,((SRC-IP-CIDR,192.168.10.192/32),(NETWORK,UDP),(SRC-PORT,9993/45229/38935)),DIRECT',
   'AND,((SRC-IP-CIDR,192.168.10.192/32),(NETWORK,UDP),(DST-PORT,9993)),DIRECT',
