@@ -513,14 +513,14 @@ rules: #!replace
   - 'RULE-SET,SteamCN,🎯 全球直连'
 
   - 'RULE-SET,Telegram,Telegram'
-  - 'RULE-SET,TelegramIP,Telegram'
+  - 'RULE-SET,TelegramIP,Telegram,no-resolve'
   - 'RULE-SET,Apple,🍎 苹果服务'
   - 'RULE-SET,Epic,🎮 游戏平台'
   - 'RULE-SET,Sony,🎮 游戏平台'
   - 'RULE-SET,Steam,🎮 游戏平台'
   - 'RULE-SET,Nintendo,🎮 游戏平台'
   - 'RULE-SET,Netflix,🎥 奈飞视频'
-  - 'RULE-SET,NetflixIP,🎥 奈飞视频'
+  - 'RULE-SET,NetflixIP,🎥 奈飞视频,no-resolve'
   # Generic proxy fallback after every dedicated service rule.
   - 'RULE-SET,ProxyGFWlist,🚀 节点选择'
 
