@@ -548,14 +548,14 @@ config['rules'] = [
 ]
 
 # -----------------------------------------------------------------------------
-# DNS: domestic queries use AliDNS/Tencent DoH; proxy-oriented rule sets use
+# DNS: domestic queries use AliDNS/Tencent UDP DNS; proxy-oriented rule sets use
 # Cloudflare/Google DoH through the primary policy group. Preserve unrelated
 # OpenClash-generated DNS keys, including every oc-* provider reference.
 # -----------------------------------------------------------------------------
 dns = config['dns'].is_a?(Hash) ? config['dns'] : {}
 domestic_dns = [
-  'https://dns.alidns.com/dns-query',
-  'https://doh.pub/dns-query'
+  '223.5.5.5',
+  '119.29.29.29'
 ]
 overseas_dns = [
   'https://cloudflare-dns.com/dns-query',

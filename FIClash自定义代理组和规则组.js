@@ -550,7 +550,7 @@ function main(config) {
 
 
 // ----------------------------------------------------------
-// 7. DNS：国内默认阿里/腾讯 DoH，国外和代理业务使用 Cloudflare/Google DoH。
+// 7. DNS：国内默认阿里/腾讯 UDP DNS，国外和代理业务使用 Cloudflare/Google DoH。
 // ----------------------------------------------------------
 
 config.dns = config.dns || {};
@@ -560,8 +560,8 @@ config.dns = config.dns || {};
 config.ipv6 = true;
 
 const domesticDns = [
-  "https://dns.alidns.com/dns-query",
-  "https://doh.pub/dns-query"
+  "223.5.5.5",
+  "119.29.29.29"
 ];
 
 // DNS 出站由前置的 DNS 专用规则决定。

@@ -22,8 +22,8 @@ dns:
     - '223.5.5.5'
     - '119.29.29.29'
   nameserver: #!replace
-    - 'https://dns.alidns.com/dns-query'
-    - 'https://doh.pub/dns-query'
+    - '223.5.5.5'
+    - '119.29.29.29'
   fallback: #!replace
     - 'https://cloudflare-dns.com/dns-query'
     - 'https://dns.google/dns-query'
@@ -32,8 +32,8 @@ dns:
     - '223.5.5.5'
     - '119.29.29.29'
   direct-nameserver: #!replace
-    - 'https://dns.alidns.com/dns-query'
-    - 'https://doh.pub/dns-query'
+    - '223.5.5.5'
+    - '119.29.29.29'
   direct-nameserver-follow-policy: false
   fallback-filter:
     geoip: true
@@ -80,20 +80,20 @@ dns:
       - 'https://cloudflare-dns.com/dns-query'
       - 'https://dns.google/dns-query'
     'rule-set:CustomDirectDomain':
-      - 'https://dns.alidns.com/dns-query'
-      - 'https://doh.pub/dns-query'
+      - '223.5.5.5'
+      - '119.29.29.29'
     'rule-set:PrivateDomain':
-      - 'https://dns.alidns.com/dns-query'
-      - 'https://doh.pub/dns-query'
+      - '223.5.5.5'
+      - '119.29.29.29'
     'rule-set:ChinaDomain':
-      - 'https://dns.alidns.com/dns-query'
-      - 'https://doh.pub/dns-query'
+      - '223.5.5.5'
+      - '119.29.29.29'
     'rule-set:GoogleCN':
-      - 'https://dns.alidns.com/dns-query'
-      - 'https://doh.pub/dns-query'
+      - '223.5.5.5'
+      - '119.29.29.29'
     'rule-set:SteamCN':
-      - 'https://dns.alidns.com/dns-query'
-      - 'https://doh.pub/dns-query'
+      - '223.5.5.5'
+      - '119.29.29.29'
 
 proxies:
   - name: '🏠 Tailscale'

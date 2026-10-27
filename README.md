@@ -15,9 +15,9 @@
 
 ## DNS 与 IPv6
 
-FiClash、OpenClash 与 Stash 使用一致的 DNS 分流策略：AliDNS / DNSPod DoH 用于国内与直连域名，Cloudflare / Google DoH 用于代理业务；`nameserver-policy` 决定查询哪个解析器，靠前的 DNS 专用路由规则决定连接解析器时的出站。FiClash / OpenClash 使用 Mihomo 的 `respect-rules: true`（并关闭 `prefer-h3`），Stash 使用 `follow-rule: true`。`dns.alidns.com` / `doh.pub` 和启动 DNS 的两个 IPv4 地址固定 `DIRECT`，`cloudflare-dns.com` / `dns.google` 固定交给 `🚀 节点选择`，DoH URL 不附加代理策略组片段。
+FiClash、OpenClash 与 Stash 使用一致的 DNS 分流策略：`223.5.5.5` / `119.29.29.29` 普通 UDP DNS 用于国内与直连域名，Cloudflare / Google DoH 用于代理业务；`nameserver-policy` 决定查询哪个解析器，靠前的 DNS 专用路由规则决定连接解析器时的出站。FiClash / OpenClash 使用 Mihomo 的 `respect-rules: true`（并关闭 `prefer-h3`），Stash 使用 `follow-rule: true`。`dns.alidns.com` / `doh.pub` 和启动 DNS 的两个 IPv4 地址固定 `DIRECT`，`cloudflare-dns.com` / `dns.google` 固定交给 `🚀 节点选择`，DoH URL 不附加代理策略组片段。
 
-三端的启动 DNS 和独立节点域名解析 DNS 均为 `223.5.5.5` / `119.29.29.29`，避免节点解析依赖代理本身；使用 IPv4 DNS 地址不影响业务域名的 AAAA 解析。国内 DoH、境外 fallback 和业务分流继续保留。Telegram / Netflix 的 IP 规则使用 `no-resolve`，避免在国内域名规则之前触发不必要的解析。
+三端的启动 DNS 和独立节点域名解析 DNS 均为 `223.5.5.5` / `119.29.29.29`，避免节点解析依赖代理本身；使用 IPv4 DNS 地址不影响业务域名的 AAAA 解析。国内 DNS 固定直连，境外 DoH fallback 和业务分流继续保留。Telegram / Netflix 的 IP 规则使用 `no-resolve`，避免在国内域名规则之前触发不必要的解析。
 
 Stash 的 DNS 上游列表和 `nameserver-policy` 使用 `#!replace`，避免与订阅 DNS 拼接；其余 DNS 字段（如 `fake-ip-filter`）仍保留。FiClash 保留本机 WPS / WebDAV 等设置；OpenClash 保留生成的 `oc-*` 规则集及无关 DNS 字段。后续覆写及客户端选项仍可能覆盖配置，部署后应检查实际运行配置。Loon 仍使用自身原生 DNS 配置，不在本次三端统一范围内。
 
