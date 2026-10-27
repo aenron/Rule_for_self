@@ -642,12 +642,19 @@ config.dns["fake-ip-filter"] = [
 // 8. 返回修改后的配置
 // ----------------------------------------------------------
 
-  // WebDAV 使用普通直连；由路由选择出口，不绑定 Tailscale 网卡。
-  const webdavDirectName = "WebDAV-LAN-Tailscale";
-  config.proxies = (config.proxies || []).filter(p => p.name !== webdavDirectName);
-  const webdavDirectRule = "IP-CIDR,192.168.10.192/32,DIRECT,no-resolve";
-  config.rules = [webdavDirectRule, ...(config.rules || []).filter(r =>
-    r !== webdavDirectRule && r !== "IP-CIDR,192.168.10.192/32," + webdavDirectName + ",no-resolve"
+  // 远程内网固定经 Tailscale，避免 TUN 自动检测误选 WLAN 出口。
+  const tailscaleDirectName = "LAN-Tailscale";
+  config.proxies = [
+    ...(config.proxies || []).filter(p =>
+      p.name !== tailscaleDirectName && p.name !== "WebDAV-LAN-Tailscale"
+    ),
+    { name: tailscaleDirectName, type: "direct", "interface-name": "Tailscale" }
+  ];
+  const tailscaleSubnetRule = "IP-CIDR,192.168.10.0/24," + tailscaleDirectName + ",no-resolve";
+  config.rules = [tailscaleSubnetRule, ...(config.rules || []).filter(r =>
+    r !== tailscaleSubnetRule &&
+    r !== "IP-CIDR,192.168.10.192/32,DIRECT,no-resolve" &&
+    r !== "IP-CIDR,192.168.10.192/32,WebDAV-LAN-Tailscale,no-resolve"
   )];
 
   return config;

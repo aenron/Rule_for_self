@@ -40,6 +40,8 @@ Hugging Face 的 Xet、CDN 与 LFS 文件传输域名列在 `Proxy_Domain.yaml`�
 
 ## 规则优先级
 
+Windows FiClash 为 `192.168.10.0/24` 设置首条 `LAN-Tailscale` 规则，通过绑定 `Tailscale` 网卡的 `direct` 出口访问远程内网，避免 TUN 自动检测选择 WLAN 导致 WebDAV 等连接超时。使用此脚本的 Windows 主机需已安装并连接 Tailscale，且具有该子网的访问路由。
+
 FiClash、OpenClash 与 Stash 中，自定义直连 / 代理规则和专用业务规则优先，随后是 GFW 通用代理规则；再匹配 MetaCubeX 的 `private` 与 `cn` 域名/IP MRS 并直连；剩余境外或未知流量进入 `🐟 漏网之鱼`。GitHub 规则独立于微软服务规则，并排在微软规则之前；Telegram 和 Netflix 同时加载域名及官方 IP 段规则，以覆盖移动端直连 IP 的流量。已移除上游失效的 `ProxyMedia` / `🌍 国外媒体` 规则集与策略组，避免规则下载 404。
 
 Loon 的服务规则来自 Blackmatrix7 的 Loon 原生 `.list`；其当前 `FINAL,DIRECT` 为独立的默认直连策略，不等同于 Mihomo 三端的 `🐟 漏网之鱼` 兜底。
