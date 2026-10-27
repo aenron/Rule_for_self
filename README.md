@@ -15,7 +15,9 @@
 
 ## DNS 与 IPv6
 
-FiClash、OpenClash 与 Stash 启用双栈 DNS：AliDNS / DNSPod DoH 用于国内与直连域名，Cloudflare / Google DoH 经 `🚀 节点选择` 用于代理业务。`nameserver-policy` 依据规则集指定解析器，`default-nameserver` 同时包含 IPv4 与 IPv6 启动 DNS；节点域名和直连出口仍使用国内 DoH，避免代理 DNS 的循环依赖。Loon 使用 `ip-mode = dual` 及国内 UDP/DoH DNS；其原生格式不支持 Mihomo 的 `nameserver-policy`。
+FiClash、OpenClash 与 Stash 启用双栈 DNS：AliDNS / DNSPod DoH 用于国内与直连域名，Cloudflare / Google DoH 经 `🚀 节点选择` 用于代理业务。`nameserver-policy` 依据规则集指定解析器，FiClash / OpenClash 的 `default-nameserver` 同时包含 IPv4 与 IPv6 启动 DNS；节点域名使用独立的国内 DNS，直连出口使用国内 DoH，避免代理 DNS 的循环依赖。Loon 使用 `ip-mode = dual` 及国内 UDP/DoH DNS；其原生格式不支持 Mihomo 的 `nameserver-policy`。
+
+Stash 的启动 DNS 单独精简为 `223.5.5.5` / `119.29.29.29`；使用 IPv4 启动 DNS 不影响业务域名的 AAAA 解析。DNS 上游列表和 `nameserver-policy` 使用 `#!replace`，避免与订阅 DNS 拼接；显式设置 `follow-rule: true`，由靠前的 DNS 专用规则将 AliDNS / DNSPod DoH 域名及两个启动 DNS IP 固定直连，将 `cloudflare-dns.com` / `dns.google` 固定交给 `🚀 节点选择`；境外 DoH URL 不再附加策略组片段，统一由规则决定出站。`proxy-server-nameserver` 使用独立直连的 `223.5.5.5` / `119.29.29.29`，避免节点域名解析依赖代理本身；保留境外 fallback。Telegram / Netflix 的 IP 规则使用 `no-resolve`，避免在国内域名规则之前触发不必要的解析。订阅中的其他 DNS 字段（如 `fake-ip-filter`）仍保留，其他后续覆写仍可覆盖这些设置。
 
 FiClash、OpenClash 与 Stash 会从本仓库 `main` 分支下载下列可读自定义规则；Loon 通过原生 `.list` 文件加载对应的自定义规则。应用脚本或覆写后重新加载配置（或更新订阅）即可生效。
 

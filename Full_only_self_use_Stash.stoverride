@@ -14,27 +14,24 @@ dns:
   enable: true
   ipv6: true
   cache-algorithm: arc
-  # Bootstrap resolvers are only used to resolve encrypted DNS server names.
-  default-nameserver:
+  # DNS upstream connections use the explicit rules below.
+  follow-rule: true
+  # Replace DNS lists instead of prepending to subscription resolvers.
+  # Bootstrap only resolves encrypted DNS server names.
+  default-nameserver: #!replace
     - '223.5.5.5'
     - '119.29.29.29'
-    - '2400:3200::1'
-    - '2400:3200:baba::1'
-    - '2402:4e00::'
-    - '1.1.1.1'
-    - '8.8.8.8'
-    - '2606:4700:4700::1111'
-    - '2001:4860:4860::8888'
-  nameserver:
+  nameserver: #!replace
     - 'https://dns.alidns.com/dns-query'
     - 'https://doh.pub/dns-query'
-  fallback:
-    - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-    - 'https://dns.google/dns-query#🚀 节点选择'
-  proxy-server-nameserver:
-    - 'https://dns.alidns.com/dns-query'
-    - 'https://doh.pub/dns-query'
-  direct-nameserver:
+  fallback: #!replace
+    - 'https://cloudflare-dns.com/dns-query'
+    - 'https://dns.google/dns-query'
+  # Independent direct lookup prevents proxy-node DNS recursion.
+  proxy-server-nameserver: #!replace
+    - '223.5.5.5'
+    - '119.29.29.29'
+  direct-nameserver: #!replace
     - 'https://dns.alidns.com/dns-query'
     - 'https://doh.pub/dns-query'
   direct-nameserver-follow-policy: false
@@ -42,46 +39,46 @@ dns:
     geoip: true
     geoip-code: CN
     fallback-lazy-query: false
-  nameserver-policy:
+  nameserver-policy: #!replace
     'rule-set:CustomProxyDomain':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:AI':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:GitHub':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:OneDrive':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:Microsoft':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:ProxyGFWlist':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:Telegram':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:Netflix':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:Epic':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:Sony':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:Steam':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:Nintendo':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:Gmail':
-      - 'https://cloudflare-dns.com/dns-query#🚀 节点选择'
-      - 'https://dns.google/dns-query#🚀 节点选择'
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
     'rule-set:CustomDirectDomain':
       - 'https://dns.alidns.com/dns-query'
       - 'https://doh.pub/dns-query'
@@ -491,6 +488,14 @@ rules: #!replace
   # Preserve the device-specific Tailscale routes.
   - 'IP-CIDR,100.64.0.0/10,🏠 Tailscale,no-resolve'
   - 'IP-CIDR,192.168.10.0/24,🏠 Tailscale,no-resolve'
+
+  # Pin DNS transports before general business rules and the proxy fallback.
+  - 'DOMAIN,dns.alidns.com,DIRECT'
+  - 'DOMAIN,doh.pub,DIRECT'
+  - 'IP-CIDR,223.5.5.5/32,DIRECT,no-resolve'
+  - 'IP-CIDR,119.29.29.29/32,DIRECT,no-resolve'
+  - 'DOMAIN,cloudflare-dns.com,🚀 节点选择'
+  - 'DOMAIN,dns.google,🚀 节点选择'
 
   # Custom proxy entries intentionally precede direct entries so
   # dl.tailscale.com can proxy while +.tailscale.com remains direct.
