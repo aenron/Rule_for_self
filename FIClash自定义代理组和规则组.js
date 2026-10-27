@@ -479,6 +479,13 @@ function main(config) {
   // ----------------------------------------------------------
 
   config.rules = [
+    // DNS transport routing precedes general business rules.
+    "DOMAIN,dns.alidns.com,DIRECT",
+    "DOMAIN,doh.pub,DIRECT",
+    "IP-CIDR,223.5.5.5/32,DIRECT,no-resolve",
+    "IP-CIDR,119.29.29.29/32,DIRECT,no-resolve",
+    "DOMAIN,cloudflare-dns.com,🚀 节点选择",
+    "DOMAIN,dns.google,🚀 节点选择",
     // Syncthing 文件同步、发现和中继连接统一直连。
     "PROCESS-NAME,syncthing.exe,DIRECT",
 
@@ -512,7 +519,7 @@ function main(config) {
 
     // Telegram
     "RULE-SET,Telegram,Telegram",
-    "RULE-SET,TelegramIP,Telegram",
+    "RULE-SET,TelegramIP,Telegram,no-resolve",
 
     // Apple
     "RULE-SET,Apple,🍎 苹果服务",
@@ -525,7 +532,7 @@ function main(config) {
 
     // Netflix
     "RULE-SET,Netflix,🎥 奈飞视频",
-    "RULE-SET,NetflixIP,🎥 奈飞视频",
+    "RULE-SET,NetflixIP,🎥 奈飞视频,no-resolve",
 
     // GFW：通用代理兜底，放在所有专用业务规则之后。
     "RULE-SET,ProxyGFWlist,🚀 节点选择",
@@ -557,30 +564,22 @@ const domesticDns = [
   "https://doh.pub/dns-query"
 ];
 
-// #🚀 节点选择 让国外 DoH 经主代理组连接，避免其在国内网络中被阻断。
+// DNS 出站由前置的 DNS 专用规则决定。
 const overseasDns = [
-  "https://cloudflare-dns.com/dns-query#🚀 节点选择",
-  "https://dns.google/dns-query#🚀 节点选择"
+  "https://cloudflare-dns.com/dns-query",
+  "https://dns.google/dns-query"
 ];
 
 config.dns.enable = true;
+config.dns["respect-rules"] = true;
+config.dns["prefer-h3"] = false;
 config.dns.ipv6 = true;
 config.dns["cache-algorithm"] = "arc";
 // 仅用于解析 DoH 服务器域名的启动 DNS，必须为 IP 地址。
-config.dns["default-nameserver"] = [
-  "223.5.5.5",
-  "119.29.29.29",
-  "2400:3200::1",
-  "2400:3200:baba::1",
-  "2402:4e00::",
-  "1.1.1.1",
-  "8.8.8.8",
-  "2606:4700:4700::1111",
-  "2001:4860:4860::8888"
-];
+config.dns["default-nameserver"] = ["223.5.5.5", "119.29.29.29"];
 config.dns.nameserver = domesticDns;
 config.dns.fallback = overseasDns;
-config.dns["proxy-server-nameserver"] = domesticDns;
+config.dns["proxy-server-nameserver"] = ["223.5.5.5", "119.29.29.29"];
 config.dns["direct-nameserver"] = domesticDns;
 config.dns["direct-nameserver-follow-policy"] = false;
 config.dns["fallback-filter"] = {

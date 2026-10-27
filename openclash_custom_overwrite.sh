@@ -479,6 +479,13 @@ puts "[custom-overwrite] preserved OpenClash oc-* providers: #{oc_rule_providers
 # set so their own policy group is effective.
 # -----------------------------------------------------------------------------
 config['rules'] = [
+  # DNS transport routing precedes general business rules.
+  'DOMAIN,dns.alidns.com,DIRECT',
+  'DOMAIN,doh.pub,DIRECT',
+  'IP-CIDR,223.5.5.5/32,DIRECT,no-resolve',
+  'IP-CIDR,119.29.29.29/32,DIRECT,no-resolve',
+  'DOMAIN,cloudflare-dns.com,🚀 节点选择',
+  'DOMAIN,dns.google,🚀 节点选择',
   # STUN/TURN discovery must use the direct UDP path (IPv4 and IPv6).
   'AND,((NETWORK,UDP),(DST-PORT,3478)),DIRECT',
 
@@ -522,14 +529,14 @@ config['rules'] = [
   'RULE-SET,SteamCN,🎯 全球直连',
 
   'RULE-SET,Telegram,Telegram',
-  'RULE-SET,TelegramIP,Telegram',
+  'RULE-SET,TelegramIP,Telegram,no-resolve',
   'RULE-SET,Apple,🍎 苹果服务',
   'RULE-SET,Epic,🎮 游戏平台',
   'RULE-SET,Sony,🎮 游戏平台',
   'RULE-SET,Steam,🎮 游戏平台',
   'RULE-SET,Nintendo,🎮 游戏平台',
   'RULE-SET,Netflix,🎥 奈飞视频',
-  'RULE-SET,NetflixIP,🎥 奈飞视频',
+  'RULE-SET,NetflixIP,🎥 奈飞视频,no-resolve',
   'RULE-SET,ProxyGFWlist,🚀 节点选择',
 
   'RULE-SET,PrivateDomain,🎯 全球直连',
@@ -551,28 +558,24 @@ domestic_dns = [
   'https://doh.pub/dns-query'
 ]
 overseas_dns = [
-  'https://cloudflare-dns.com/dns-query#🚀 节点选择',
-  'https://dns.google/dns-query#🚀 节点选择'
+  'https://cloudflare-dns.com/dns-query',
+  'https://dns.google/dns-query'
 ]
 
 dns['enable'] = true
+dns['respect-rules'] = true
+dns['prefer-h3'] = false
 dns['ipv6'] = true
 dns['cache-algorithm'] = 'arc'
 config['ipv6'] = true
-# Bootstrap DNS resolves DoH server hostnames. Keep dual-stack domestic and
-# overseas resolvers here; ordinary domain queries are controlled below.
-dns['default-nameserver'] = [
-  '223.5.5.5', '119.29.29.29',
-  '2400:3200::1', '2400:3200:baba::1', '2402:4e00::',
-  '1.1.1.1', '8.8.8.8',
-  '2606:4700:4700::1111', '2001:4860:4860::8888'
-]
+# Bootstrap and proxy-node lookups use independent domestic DNS.
+dns['default-nameserver'] = ['223.5.5.5', '119.29.29.29']
 # Use independent Array objects. Psych otherwise writes YAML anchors when the
 # same Array is reused by nameserver-policy, which older OpenClash Ruby builds
 # may reject during validation.
 dns['nameserver'] = domestic_dns.dup
 dns['fallback'] = overseas_dns.dup
-dns['proxy-server-nameserver'] = domestic_dns.dup
+dns['proxy-server-nameserver'] = ['223.5.5.5', '119.29.29.29']
 dns['direct-nameserver'] = domestic_dns.dup
 dns['direct-nameserver-follow-policy'] = false
 dns['fallback-filter'] = {
