@@ -7,11 +7,21 @@
 | 客户端 | 文件 | 作用 |
 | --- | --- | --- |
 | FiClash | `FIClash自定义代理组和规则组.js` | 后处理脚本；重建代理组、规则集和 DNS 分流。 |
-| OpenClash | `openclash_custom_overwrite.sh` | 自定义覆写脚本；保留 OpenClash 的 `oc-*` DNS 规则集。 |
+| OpenClash | `OpenClash_Overwrite.yaml` | 原生 `[YAML]` 覆写模块；保留 OpenClash 的 `oc-*` DNS 规则集。 |
 | Stash | `Full_only_self_use_Stash.stoverride` | 覆写配置；使用 MetaCubeX MRS 规则集。 |
 | Loon | `Full_only_self_use_Loon_pure.conf` | 远程主配置；机场订阅仅在 Loon 本地添加，不写入仓库。 |
 
 `Rule_for_self` 是 FiClash、OpenClash、Stash 与 Loon 配置的唯一维护源。客户端应配置本仓库 `main` 分支的远程文件，不保留 `D:\sync\服务器运维` 根目录中的本地副本，以免更新时发生版本漂移。
+
+### OpenClash YAML 模块
+
+`OpenClash_Overwrite.yaml` 是包含 `[YAML]` 标记的 OpenClash 覆写模块，不是可独立运行的 Mihomo 配置，也不是用于直接导入订阅的文件。需要支持 YAML 块及 `where/set` 条件操作的 OpenClash 版本；仅支持基础 YAML 块的旧版本应先升级。
+
+将文件上传到 `/etc/openclash/overwrite/Rule_for_self.yaml`，在覆写模块中启用并选择需要生效的配置文件，然后重启 OpenClash。远程模块地址为 `https://raw.githubusercontent.com/aenron/Rule_for_self/main/OpenClash_Overwrite.yaml`，须在文件推送到 `main` 后使用。
+
+启用时应将 `/etc/openclash/custom/openclash_custom_overwrite.sh` 移出该路径，避免旧脚本随后再次覆写。仓库中的同名 `.sh` 文件保留为迁移参考和回退版本，后续 OpenClash 配置以 YAML 模块为维护入口。
+
+模块保留订阅节点和代理集，整体替换策略组及规则；先按名称删除非 `oc-*` 规则集，再添加仓库定义的规则集。因此 `rule-providers*` 必须位于 `rule-providers` 之前。DNS 使用字段合并，并整体替换 `fallback-filter`，保留 Fake-IP 等无关设置。模块没有旧脚本的节点存在性检查、引用预检查及自定义日志；应用前后应检查 OpenClash 日志和 Mihomo 配置校验结果。
 
 ## DNS 与 IPv6
 
